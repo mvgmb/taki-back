@@ -1,0 +1,133 @@
+swagger: "2.0"
+info:
+  description: "IF683 Takí project"
+  version: "1.0.0"
+  title: "Takí Project"
+  contact:
+    email: "mvgmb@cin.ufpe.br"
+basePath: "/"
+tags:
+  - name: "administrator"
+    description: "Administrator privilege required"
+  - name: "anyone"
+    description: "No privilege required"
+schemes:
+- "https"
+securityDefinitions:
+  bearerAuth:
+    name: "Authorization"
+    in: "header"
+    type: "apiKey"
+paths:
+  /user:
+    get:
+      description: 
+        "Gets `User` object."
+      tags:
+        - "anyone"
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            $ref: "#/definitions/User"
+definitions:
+  User:
+    type: "object"
+    properties:
+      _id:
+        type: "integer"
+        description: "Unique identifier representing a specific user"
+      name:
+        type: "string"
+        description: "Name of user"
+      age:
+        type: "integer"
+        description: "Age of user"
+      sex:
+        type: "integer"
+        description: "Sex of user"
+      email:
+        type: "string"
+        description: "E-mail of user"
+      permission:
+        type: "string"
+        description: "Permission of user"
+        enum:
+          - "ADMINISTRATOR"
+          - "MANAGER"
+          - "USER"
+  Product:
+    type: "object"
+    properties:
+      _id:
+        type: "integer"
+        description: "Unique identifier representing a specific Product"
+      name:
+        type: "string"
+        description: "Name of product"
+      description:
+        type: "string"
+        description: "Description of product"
+  Store:
+    type: "object"
+    properties:
+      _id: 
+        type: "integer"
+        description: "Unique identifier representing a specific Store"
+      name:
+        type: "string"
+        description: "Name of store"
+  List:
+    type: "object"
+    properties:
+      _id:
+        type: "integer"
+        description: "Unique identifier representing a specific List"
+      name: 
+        type: "string"
+        description: "Name of list"
+      products:
+        type: "array"
+        items:
+          type: "integer"
+        description: "List of items ID"
+  Map:
+    type: "object"
+    properties:
+      _id: 
+        type: "integer"
+        description: "Unique identifier representing a specific map"
+      matrix:
+        type: "array"
+        items: 
+          type: "array"
+          items: 
+            $ref: "#/definitions/MapValue"
+  MapValue:
+    type: "object"
+    properties:
+      category:
+        type: "string"
+        description: "Category of store"
+      aisle:
+        type: "integer"
+        description: "Aisle of category"
+      direction:
+        type: "integer"
+        description: "Direction of aisle"
+        enum: 
+          - "NULL"
+          - "HORIZONTAL"
+          - "VERTICAL"
+          - "RIGHT_DIAGONAL"
+          - "LEFT_DIAGONAL"
+  MapRoute:
+    type: "object"
+    properties:
+      route:
+        type: "array"
+        items:
+          $ref: "#/definitions/MapValue"
+        description: "Products route"
