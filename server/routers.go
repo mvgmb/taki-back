@@ -11,6 +11,7 @@
 package server
 
 import (
+	"database/sql"
 	"fmt"
 	"net/http"
 	"strings"
@@ -27,7 +28,9 @@ type Route struct {
 
 type Routes []Route
 
-func NewRouter() *mux.Router {
+var db *sql.DB
+
+func NewRouter(_db *sql.DB) *mux.Router {
 	router := mux.NewRouter().StrictSlash(true)
 	for _, route := range routes {
 		var handler http.Handler
@@ -40,6 +43,8 @@ func NewRouter() *mux.Router {
 			Name(route.Name).
 			Handler(handler)
 	}
+
+	db = _db
 
 	return router
 }

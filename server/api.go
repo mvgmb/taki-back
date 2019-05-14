@@ -11,10 +11,14 @@
 package server
 
 import (
+	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/gorilla/mux"
+	"github.com/mvgmb/taki-back/util"
 )
 
 func StoreStoreIDListListIDDelete(w http.ResponseWriter, r *http.Request) {
@@ -22,6 +26,7 @@ func StoreStoreIDListListIDDelete(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
+// TODO get
 func StoreStoreIdListListIdGet(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
@@ -47,26 +52,63 @@ func StoreStoreIdListNewPost(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
+// TODO get
 func StoreStoreIdListsGet(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 }
 
+// TODO get
 func StoreStoreIdMapGet(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 }
 
+// StoreStoreIdProductsGet returns all Products of a given Store
 func StoreStoreIdProductsGet(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
+
+	vars := mux.Vars(r)
+
+	stmt := fmt.Sprintf("SELECT p._id, p.name, p.description FROM products AS p, product_category AS pc WHERE p._id = pc.product_id AND pc.store_id = %s", vars["storeId"])
+
+	result, err := util.RunStatement(db, stmt)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var products []Product
+	var p Product
+
+	for i := range result {
+		if i != 0 {
+			num, err := strconv.ParseInt(result[i][0], 10, 32)
+			if err != nil {
+				log.Fatal(err)
+			}
+			p.Id = int32(num)
+			p.Name = result[i][1]
+			p.Description = result[i][2]
+
+			products = append(products, p)
+		}
+	}
+
+	bytes, err := json.Marshal(products)
+	if err != nil {
+		log.Fatal(err)
+	}
+	w.Write(bytes)
 }
 
+// TODO get
 func StoresGet(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 }
 
+// TODO get
 func UserGet(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)

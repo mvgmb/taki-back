@@ -26,7 +26,7 @@ func init() {
 	}
 
 	// Create router
-	router = sw.NewRouter()
+	router = sw.NewRouter(db)
 }
 
 func main() {
