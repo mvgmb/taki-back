@@ -21,3 +21,11 @@ mysql -uuser -ppassword
 #or
 mysql -uroot -prootpassword
 ```
+
+## Kill, remove, build and start container
+```bash
+docker kill `docker ps -q` &&\
+docker rm $(docker ps -a -q) &&\
+docker build -t taki/mysql . &&\
+docker run --name taki_db -p3306:3306 taki/mysql
+```
