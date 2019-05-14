@@ -1,3 +1,4 @@
+---
 swagger: "2.0"
 info:
   description: "IF683 Takí project"
@@ -5,33 +6,252 @@ info:
   title: "Takí Project"
   contact:
     email: "mvgmb@cin.ufpe.br"
-basePath: "/"
-tags:
-  - name: "administrator"
-    description: "Administrator privilege required"
-  - name: "anyone"
-    description: "No privilege required"
 schemes:
 - "https"
-securityDefinitions:
-  bearerAuth:
-    name: "Authorization"
-    in: "header"
-    type: "apiKey"
 paths:
   /user:
     get:
-      description: 
-        "Gets `User` object."
       tags:
-        - "anyone"
-      security:
-        - bearerAuth: []
+      - "anyone"
+      description: "Gets `User` object."
+      parameters: []
       responses:
         200:
           description: "Successful response"
           schema:
             $ref: "#/definitions/User"
+      security:
+      - bearerAuth: []
+  /user/new:
+    post:
+      tags:
+      - "anyone"
+      description: "Posts `User` object"
+      parameters:
+      - in: "body"
+        name: "user"
+        description: "`User` object"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+        x-exportParamName: "User"
+      responses:
+        201:
+          description: "Successful response"
+          schema:
+            type: "string"
+            description: "`User`'s id"
+      security:
+      - bearerAuth: []
+  /stores:
+    get:
+      tags:
+      - "anyone"
+      description: "Gets all `Store` objects"
+      parameters: []
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Store"
+      security:
+      - bearerAuth: []
+  /store/{storeId}/products:
+    get:
+      tags:
+      - "anyone"
+      description: "Gets all `Product` objects from store"
+      parameters:
+      - name: "storeId"
+        in: "path"
+        description: "Id of store"
+        required: true
+        type: "string"
+        x-exportParamName: "StoreId"
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Product"
+      security:
+      - bearerAuth: []
+  /store/{storeId}/list/new:
+    post:
+      tags:
+      - "anyone"
+      description: "Posts `List` object"
+      parameters:
+      - name: "storeId"
+        in: "path"
+        description: "Id of store"
+        required: true
+        type: "string"
+        x-exportParamName: "StoreId"
+      - in: "body"
+        name: "list"
+        description: "List` object"
+        required: true
+        schema:
+          $ref: "#/definitions/List"
+        x-exportParamName: "List"
+      responses:
+        201:
+          description: "Successful response"
+          schema:
+            type: "string"
+            description: "`List`'s id"
+      security:
+      - bearerAuth: []
+  /store/{storeId}/lists:
+    get:
+      tags:
+      - "anyone"
+      description: "Gets `List` objects with EMPTY 'Product's field"
+      parameters:
+      - name: "storeId"
+        in: "path"
+        description: "Id of which store's lists to return"
+        required: true
+        type: "string"
+        x-exportParamName: "StoreId"
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/List"
+      security:
+      - bearerAuth: []
+  /store/{storeId}/list/{listId}:
+    get:
+      tags:
+      - "anyone"
+      description: "Gets `List` objects"
+      parameters:
+      - name: "storeId"
+        in: "path"
+        description: "Id of store"
+        required: true
+        type: "string"
+        x-exportParamName: "StoreId"
+      - name: "listId"
+        in: "path"
+        description: "Id of list of products"
+        required: true
+        type: "string"
+        x-exportParamName: "ListId"
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            $ref: "#/definitions/List"
+      security:
+      - bearerAuth: []
+    put:
+      tags:
+      - "anyone"
+      description: "Puts `List` object"
+      parameters:
+      - name: "storeId"
+        in: "path"
+        description: "Id of store"
+        required: true
+        type: "string"
+        x-exportParamName: "StoreId"
+      - name: "listId"
+        in: "path"
+        description: "Id of list"
+        required: true
+        type: "string"
+        x-exportParamName: "ListId"
+      - in: "body"
+        name: "list"
+        description: "`List` object"
+        required: true
+        schema:
+          $ref: "#/definitions/List"
+        x-exportParamName: "List"
+      responses:
+        202:
+          description: "Successful response"
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - "anyone"
+      description: "Deletes `List` object"
+      parameters:
+      - name: "storeId"
+        in: "path"
+        description: "Id of store"
+        required: true
+        type: "string"
+        x-exportParamName: "StoreId"
+      - name: "listId"
+        in: "path"
+        description: "Id of list to delete"
+        required: true
+        type: "string"
+        x-exportParamName: "ListId"
+      responses:
+        202:
+          description: "Successful response"
+      security:
+      - bearerAuth: []
+  /store/{storeId}/list/{listId}/route:
+    get:
+      tags:
+      - "anyone"
+      description: "Gets `MapRoute` object"
+      parameters:
+      - name: "storeId"
+        in: "path"
+        description: "Id of store"
+        required: true
+        type: "string"
+        x-exportParamName: "StoreId"
+      - name: "listId"
+        in: "path"
+        description: "Id of list of products"
+        required: true
+        type: "string"
+        x-exportParamName: "ListId"
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            $ref: "#/definitions/MapRoute"
+      security:
+      - bearerAuth: []
+  /store/{storeId}/map:
+    get:
+      tags:
+      - "anyone"
+      description: "Gets `Map` object"
+      parameters:
+      - name: "storeId"
+        in: "path"
+        description: "Id of store"
+        required: true
+        type: "string"
+        x-exportParamName: "StoreId"
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            $ref: "#/definitions/Map"
+      security:
+      - bearerAuth: []
+securityDefinitions:
+  bearerAuth:
+    type: "apiKey"
+    name: "Authorization"
+    in: "header"
 definitions:
   User:
     type: "object"
@@ -55,9 +275,40 @@ definitions:
         type: "string"
         description: "Permission of user"
         enum:
-          - "ADMINISTRATOR"
-          - "MANAGER"
-          - "USER"
+        - "ADMINISTRATOR"
+        - "MANAGER"
+        - "USER"
+    example:
+      sex: 1
+      name: "name"
+      permission: "ADMINISTRATOR"
+      _id: 0
+      age: 6
+      email: "email"
+  List:
+    type: "object"
+    properties:
+      _id:
+        type: "integer"
+        description: "Unique identifier representing a specific List"
+      name:
+        type: "string"
+        description: "Name of list"
+      products:
+        type: "array"
+        description: "List of Products"
+        items:
+          $ref: "#/definitions/Product"
+    example:
+      name: "name"
+      _id: 0
+      products:
+      - name: "name"
+        description: "description"
+        _id: 0
+      - name: "name"
+        description: "description"
+        _id: 0
   Product:
     type: "object"
     properties:
@@ -70,41 +321,77 @@ definitions:
       description:
         type: "string"
         description: "Description of product"
+    example:
+      name: "name"
+      description: "description"
+      _id: 0
   Store:
     type: "object"
     properties:
-      _id: 
+      _id:
         type: "integer"
         description: "Unique identifier representing a specific Store"
       name:
         type: "string"
         description: "Name of store"
-  List:
-    type: "object"
-    properties:
-      _id:
-        type: "integer"
-        description: "Unique identifier representing a specific List"
-      name: 
-        type: "string"
-        description: "Name of list"
-      products:
-        type: "array"
-        items:
-          type: "integer"
-        description: "List of items ID"
+      map:
+        $ref: "#/definitions/Map"
+    example:
+      name: "name"
+      _id: 0
+      map:
+        matrix:
+        - - category: "category"
+            aisle: 6
+            direction: 1
+          - category: "category"
+            aisle: 6
+            direction: 1
+        - - category: "category"
+            aisle: 6
+            direction: 1
+          - category: "category"
+            aisle: 6
+            direction: 1
   Map:
     type: "object"
     properties:
-      _id: 
-        type: "integer"
-        description: "Unique identifier representing a specific map"
       matrix:
         type: "array"
-        items: 
+        items:
           type: "array"
-          items: 
+          items:
             $ref: "#/definitions/MapValue"
+    example:
+      matrix:
+      - - category: "category"
+          aisle: 6
+          direction: 1
+        - category: "category"
+          aisle: 6
+          direction: 1
+      - - category: "category"
+          aisle: 6
+          direction: 1
+        - category: "category"
+          aisle: 6
+          direction: 1
+  MapRoute:
+    type: "object"
+    properties:
+      route:
+        type: "array"
+        description: "Products route"
+        items:
+          $ref: "#/definitions/MapValue"
+    example:
+      route:
+      - category: "category"
+        aisle: 6
+        direction: 1
+      - category: "category"
+        aisle: 6
+        direction: 1
   MapValue:
     type: "object"
     properties:
@@ -117,17 +404,7 @@ definitions:
       direction:
         type: "integer"
         description: "Direction of aisle"
-        enum: 
-          - "NULL"
-          - "HORIZONTAL"
-          - "VERTICAL"
-          - "RIGHT_DIAGONAL"
-          - "LEFT_DIAGONAL"
-  MapRoute:
-    type: "object"
-    properties:
-      route:
-        type: "array"
-        items:
-          $ref: "#/definitions/MapValue"
-        description: "Products route"
+    example:
+      category: "category"
+      aisle: 6
+      direction: 1
