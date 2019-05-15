@@ -15,10 +15,8 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"strconv"
 
 	"github.com/gorilla/mux"
-	"github.com/mvgmb/taki-back/util"
 )
 
 func StoreStoreIDListListIDDelete(w http.ResponseWriter, r *http.Request) {
@@ -71,9 +69,12 @@ func StoreStoreIdProductsGet(w http.ResponseWriter, r *http.Request) {
 
 	vars := mux.Vars(r)
 
-	stmt := fmt.Sprintf("SELECT p._id, p.name, p.description FROM products AS p, product_category AS pc WHERE p._id = pc.product_id AND pc.store_id = %s", vars["storeId"])
+	stmt := fmt.Sprintf(`
+	SELECT p._id, p.name, p.description 
+	FROM products AS p, product_category AS pc 
+	WHERE p._id = pc.product_id AND pc.store_id = %s`, vars["storeId"])
 
-	result, err := util.RunStatement(db, stmt)
+	rows, err := db.Query(stmt)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -81,18 +82,12 @@ func StoreStoreIdProductsGet(w http.ResponseWriter, r *http.Request) {
 	var products []Product
 	var p Product
 
-	for i := range result {
-		if i != 0 {
-			num, err := strconv.ParseInt(result[i][0], 10, 32)
-			if err != nil {
-				log.Fatal(err)
-			}
-			p.Id = int32(num)
-			p.Name = result[i][1]
-			p.Description = result[i][2]
-
-			products = append(products, p)
+	for rows.Next() {
+		err = rows.Scan(&p.Id, &p.Name, &p.Description)
+		if err != nil {
+			log.Fatal(err)
 		}
+		products = append(products, p)
 	}
 
 	bytes, err := json.Marshal(products)
