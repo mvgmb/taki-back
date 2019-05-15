@@ -2,6 +2,11 @@ package util
 
 import "database/sql"
 
+// #################################################
+// #         FUNCTION ONLY FOR TESTING             #
+// #       DO NOT USE IN ACTUAL PROJECT			   #
+// #################################################
+
 // RunStatement executes a statement and return its column names and values
 // Names at row of index 0, values at every other row
 func RunStatement(db *sql.DB, stmt string) ([][]string, error) {
