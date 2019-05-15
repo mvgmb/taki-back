@@ -6,7 +6,7 @@ CREATE TABLE users (
     email TEXT,
     birthday DATE,
     sex CHAR,
-    permission INT -- 0 admin, 1 manager, 2 user
+    permission TEXT -- ADMINISTRATOR, MANAGER, USER
 );
 
 CREATE TABLE products (
@@ -43,7 +43,7 @@ CREATE TABLE user_lists (
 );
 
 
-INSERT INTO users (name, email, birthday, sex, permission) VALUES ('alex', 'alexandro@gmail.com', '1986-07-11', 'm', 2);
+INSERT INTO users (name, email, birthday, sex, permission) VALUES ('alex', 'alexandro@gmail.com', '1986-07-11', 'm', 'USER');
 
 INSERT INTO products (name, description) VALUES ('Toddynho', 'Achocolatado delicioso');
 INSERT INTO products (name, description) VALUES ('Nescau Achocolatado', 'Toddynho, so que de outra marca');
