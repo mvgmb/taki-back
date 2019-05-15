@@ -9,3 +9,9 @@ By using the [OpenAPI-Spec](https://github.com/OAI/OpenAPI-Specification) from a
 
 - API version: 1.0.0
 - Build date: 2019-05-13T23:47:12.343Z
+
+## Paths and tests
+```bash
+# /user/new
+curl -X POST "localhost:8080/user/new" -H  "accept: application/json" -H  "Content-Type: application/json" -d "{  \"sex\": 1,  \"name\": \"name\",  \"permission\": \"ADMINISTRATOR\",  \"_id\": 0,  \"age\": 6,  \"email\": \"email\"}"
+```

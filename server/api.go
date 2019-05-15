@@ -175,7 +175,22 @@ func UserGet(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
+// UserNewPost registers a new User
 func UserNewPost(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
+
+	user, err := parseUser(r)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	stmt := fmt.Sprintf(`
+	INSERT INTO users (name, email, birthday, sex, permission) 
+	VALUES ('%s', '%s', '%s', %d, '%s')`, user.Name, user.Email, user.Birthday, user.Sex, user.Permission)
+
+	_, err = db.Query(stmt)
+	if err != nil {
+		log.Fatal(err)
+	}
 }

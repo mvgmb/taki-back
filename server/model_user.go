@@ -18,8 +18,8 @@ type User struct {
 	// Name of user
 	Name string `json:"name,omitempty"`
 
-	// Age of user
-	Age int32 `json:"age,omitempty"`
+	// Birthday of user
+	Birthday string `json:"birthday,omitempty"`
 
 	// Sex of user
 	Sex int32 `json:"sex,omitempty"`
