@@ -15,9 +15,14 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/gorilla/mux"
 )
+
+type StoreMap struct {
+	Map [][]interface{} `json:"map"`
+}
 
 func StoreStoreIDListListIDDelete(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
@@ -56,10 +61,71 @@ func StoreStoreIdListsGet(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-// TODO get
+// StoreStoreIdMapGet return the Map of a given Store
 func StoreStoreIdMapGet(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
+
+	vars := mux.Vars(r)
+
+	stmt := fmt.Sprintf(`
+	SELECT map
+	FROM stores 
+	WHERE _id = %s`, vars["storeId"])
+
+	rows, err := db.Query(stmt)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var mapString string
+
+	if rows.Next() {
+		err = rows.Scan(&mapString)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+
+	raw := StoreMap{}
+
+	err = json.Unmarshal([]byte(mapString), &raw)
+	if err != nil {
+		log.Println(err)
+	}
+
+	var storeMap ModelMap
+	var mapValue MapValue
+
+	for i := range raw.Map {
+		var row []MapValue
+		for j := range raw.Map[i] {
+			slot := raw.Map[i][j].([]interface{})
+
+			aisle, err := strconv.Atoi(slot[1].(string))
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			direction, err := strconv.Atoi(slot[2].(string))
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			mapValue.Category = slot[0].(string)
+			mapValue.Aisle = int32(aisle)
+			mapValue.Direction = int32(direction)
+
+			row = append(row, mapValue)
+		}
+		storeMap.Matrix = append(storeMap.Matrix, row)
+	}
+
+	bytes, err := json.Marshal(storeMap)
+	if err != nil {
+		log.Fatal(err)
+	}
+	w.Write(bytes)
 }
 
 // StoreStoreIdProductsGet returns all Products of a given Store

@@ -18,7 +18,9 @@ CREATE TABLE products (
 CREATE TABLE stores (
     _id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name TEXT,
-    map JSON -- 2D array, e.g. { "map":[ ["0","1","2"], ["3","4","5"], ["6","7","8"] ] }
+    map JSON -- matrix
+    -- each slot == [category, aisle, direction] == [string, int, int]
+    -- direction == 0 - horizontal, 1 | vertical, 2 / right_diagonal, 3 \ left_diagonal 
 );
 
 CREATE TABLE lists (
@@ -50,9 +52,9 @@ INSERT INTO products (name, description) VALUES ('Leite Moça', 'Um Leite Conden
 INSERT INTO stores (name, map) VALUES ('Ferreira Costa', 
 '{
   "map":[
-  	[ "0", "1", "2" ],
-  	[ "3", "4", "5" ],
-  	[ "6", "7", "8" ]
+  	[ ["Achocolatado", "1", "1"], ["Free", "1", "1"], ["Leite Condensado", "1", "1"] ],
+  	[ ["Achocolatado", "1", "1"], ["Free", "1", "1"], ["Leite Condensado", "1", "1"] ],
+  	[ ["Achocolatado", "1", "1"], ["Free", "1", "1"], ["Leite Condensado", "1", "1"] ]
   ]
 }');
 
