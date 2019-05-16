@@ -8,7 +8,7 @@ import (
 func checkAuthentication(r *http.Request) (*User, error) {
 	userEmail, _, ok := (*r).BasicAuth()
 	if !ok {
-		return nil, nil
+		return nil, fmt.Errorf("Header does not contain Basic Authentication")
 	}
 
 	stmt := fmt.Sprintf(`SELECT * FROM users WHERE email = '%s'`, userEmail)
@@ -26,7 +26,7 @@ func checkAuthentication(r *http.Request) (*User, error) {
 			return nil, err
 		}
 	} else {
-		return nil, nil
+		return nil, fmt.Errorf("User does not exist")
 	}
 
 	return &user, nil
