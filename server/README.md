@@ -13,5 +13,11 @@ By using the [OpenAPI-Spec](https://github.com/OAI/OpenAPI-Specification) from a
 ## Paths and tests
 ```bash
 # /user/new
-curl -X POST "localhost:8080/user/new" -H  "accept: application/json" -H  "Content-Type: application/json" -d "{  \"sex\": 1,  \"name\": \"name\",  \"permission\": \"ADMINISTRATOR\",  \"_id\": 0,  \"age\": 6,  \"email\": \"email\"}"
+curl -X POST -u alexandro@gmail.com: "localhost:8080/user/new" -H  "accept: application/json" -H  "Content-Type: application/json"  -d "{  \"sex\": 1,  \"name\": \"name\",  \"permission\": \"ADMINISTRATOR\",  \"_id\": 0,  \"birthday\": \"1965-07-11\",  \"email\": \"email\"}"
+
+# /store/1/list/1  DELETE
+curl -u alexandro@gmail.com: -X DELETE "LOCALHOST:8080/store/1/list/1" -H  "accept: application/json"
+
+# /store/1/list/1 GET
+curl -u alexandro@gmail.com: -X GET "localhost:8080/store/1/list/1" -H  "accept: application/json"
 ```

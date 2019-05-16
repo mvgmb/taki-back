@@ -65,7 +65,13 @@ func StoreStoreIDListListIDDelete(w http.ResponseWriter, r *http.Request) {
 // StoreStoreIdListListIdGet gets a list from a given id
 func StoreStoreIdListListIdGet(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	w.WriteHeader(http.StatusOK)
+
+	_, err := checkAuthentication(r)
+	if err != nil {
+		w.WriteHeader(http.StatusUnauthorized)
+		log.Println(err)
+		return
+	}
 
 	vars := mux.Vars(r)
 
@@ -76,7 +82,9 @@ func StoreStoreIdListListIdGet(w http.ResponseWriter, r *http.Request) {
 
 	rows, err := db.Query(stmt)
 	if err != nil {
-		log.Fatal(err)
+		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err)
+		return
 	}
 
 	var list List
@@ -85,17 +93,23 @@ func StoreStoreIdListListIdGet(w http.ResponseWriter, r *http.Request) {
 	if rows.Next() {
 		err = rows.Scan(&list.Id, &list.Name, &listString)
 		if err != nil {
-			log.Fatal(err)
+			w.WriteHeader(http.StatusBadRequest)
+			log.Println(err)
+			return
 		}
 	}
+
+	log.Println(listString)
 
 	raw := StoreList{}
 
 	err = json.Unmarshal([]byte(listString), &raw)
 	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
 		log.Println(err)
+		return
 	}
-	
+
 	for _, v := range raw.Products {
 		stmt1 := fmt.Sprintf(`
 		SELECT p._id, p.Name, p.Description
@@ -104,15 +118,19 @@ func StoreStoreIdListListIdGet(w http.ResponseWriter, r *http.Request) {
 
 		product, err := db.Query(stmt1)
 		if err != nil {
-			log.Fatal(err)
+			w.WriteHeader(http.StatusBadRequest)
+			log.Println(err)
+			return
 		}
-		
+
 		var product1 Product
 
 		if product.Next() {
 			err = product.Scan(&product1.Id, &product1.Name, &product1.Description)
 			if err != nil {
-				log.Fatal(err)
+				w.WriteHeader(http.StatusBadRequest)
+				log.Println(err)
+				return
 			}
 		}
 
@@ -121,8 +139,12 @@ func StoreStoreIdListListIdGet(w http.ResponseWriter, r *http.Request) {
 
 	bytes, err := json.Marshal(list)
 	if err != nil {
-		log.Fatal(err)
+		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err)
+		return
 	}
+
+	w.WriteHeader(http.StatusOK)
 	w.Write(bytes)
 }
 
