@@ -203,10 +203,26 @@ func StoresGet(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-// TODO get
+// UserGet returns an User information
 func UserGet(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+
+	user, err := checkAuthentication(r)
+	if err != nil {
+		w.WriteHeader(http.StatusUnauthorized)
+		log.Println(err)
+		return
+	}
+
+	bytes, err := json.Marshal(user)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err)
+		return
+	}
+
 	w.WriteHeader(http.StatusOK)
+	w.Write(bytes)
 }
 
 // UserNewPost registers a new User
