@@ -18,6 +18,7 @@ import (
 	"strconv"
 
 	"github.com/gorilla/mux"
+	//"github.com/mvgmb/taki-back/util"
 )
 
 type StoreMap struct {
@@ -52,7 +53,56 @@ func StoreStoreIdListListIdRouteGet(w http.ResponseWriter, r *http.Request) {
 
 func StoreStoreIdListNewPost(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+
+	list, err := parseList(r)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err)
+		return
+	}
+
+	list_json, _ := json.Marshal(list.Products)
+
+	stmt := fmt.Sprintf(`
+	INSERT INTO lists (name, list) 
+	VALUES ('%s', '%s')`, list.Name, string(list_json))
+
+	_, err = db.Query(stmt)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err)
+		return
+	}
+
+	user, err := checkAuthentication(r)
+	if err != nil {
+		w.WriteHeader(http.StatusUnauthorized)
+		log.Println(err)
+		return
+	}
+
+	vars := mux.Vars(r)
+
+	stmt_1 := fmt.Sprintf(`
+	INSERT INTO user_lists(USER_ID, LIST_ID, STORE_ID)
+	VALUES(%d, (SELECT MAX(_id) FROM lists), %s)`, user.Id, vars["storeId"])
+
+	_, err = db.Query(stmt_1)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err)
+		return
+	}
+
+	// result, err := util.RunStatement(db, "SELECT * FROM lists")
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	// log.Println(result)
+
 	w.WriteHeader(http.StatusOK)
+
 }
 
 // TODO get
