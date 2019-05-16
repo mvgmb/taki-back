@@ -131,7 +131,13 @@ func StoreStoreIdMapGet(w http.ResponseWriter, r *http.Request) {
 // StoreStoreIdProductsGet returns all Products of a given Store
 func StoreStoreIdProductsGet(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	w.WriteHeader(http.StatusOK)
+
+	_, err := checkAuthentication(r)
+	if err != nil {
+		w.WriteHeader(http.StatusUnauthorized)
+		log.Println(err)
+		return
+	}
 
 	vars := mux.Vars(r)
 
@@ -160,6 +166,7 @@ func StoreStoreIdProductsGet(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
+	w.WriteHeader(http.StatusOK)
 	w.Write(bytes)
 }
 
