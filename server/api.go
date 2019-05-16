@@ -24,8 +24,37 @@ type StoreMap struct {
 	Map [][]interface{} `json:"map"`
 }
 
+// StoreStoreIDListListIDDelete deletes a List
 func StoreStoreIDListListIDDelete(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+
+	_, err := checkAuthentication(r)
+	if err != nil {
+		w.WriteHeader(http.StatusUnauthorized)
+		log.Println(err)
+		return
+	}
+
+	vars := mux.Vars(r)
+
+	stmt := fmt.Sprintf(`DELETE FROM lists WHERE _id = %s`, vars["listId"])
+
+	_, err = db.Query(stmt)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err)
+		return
+	}
+
+	stmt = fmt.Sprintf(`DELETE FROM user_lists WHERE list_id = %s`, vars["listId"])
+
+	_, err = db.Query(stmt)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err)
+		return
+	}
+
 	w.WriteHeader(http.StatusOK)
 }
 
