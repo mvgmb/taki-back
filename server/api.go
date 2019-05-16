@@ -18,7 +18,6 @@ import (
 	"strconv"
 
 	"github.com/gorilla/mux"
-	//"github.com/mvgmb/taki-back/util"
 )
 
 type StoreMap struct {
@@ -93,13 +92,6 @@ func StoreStoreIdListNewPost(w http.ResponseWriter, r *http.Request) {
 		log.Println(err)
 		return
 	}
-
-	// result, err := util.RunStatement(db, "SELECT * FROM lists")
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-
-	// log.Println(result)
 
 	w.WriteHeader(http.StatusOK)
 
