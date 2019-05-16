@@ -44,6 +44,7 @@ CREATE TABLE user_lists (
 
 
 INSERT INTO users (name, email, birthday, sex, permission) VALUES ('alex', 'alexandro@gmail.com', '1986-07-11', 0, 'USER');
+INSERT INTO users (name, email, birthday, sex, permission) VALUES ('valdecio', 'vald@gmail.com', '1964-02-01', 0, 'USER');
 
 INSERT INTO products (name, description) VALUES ('Toddynho', 'Achocolatado delicioso');
 INSERT INTO products (name, description) VALUES ('Nescau Achocolatado', 'Toddynho, so que de outra marca');
@@ -60,6 +61,8 @@ INSERT INTO stores (name, map) VALUES ('Ferreira Costa',
 
 INSERT INTO lists (name, list) VALUES ('Awesome List', '{ "list": ["1","3","2"] }');
 INSERT INTO lists (name, list) VALUES ('Not so Awesome List', '{ "list": ["2"] }');
+INSERT INTO lists (name, list) VALUES ('Cuazy List', '{ "list": ["1","3","2"] }');
+INSERT INTO lists (name, list) VALUES ('Dumb List', '{ "list": ["2"] }');
 
 INSERT INTO product_category (store_id, product_id, category) VALUES (1, 1, 'Achocolatado');
 INSERT INTO product_category (store_id, product_id, category) VALUES (1, 2, 'Achocolatado');
@@ -67,3 +70,5 @@ INSERT INTO product_category (store_id, product_id, category) VALUES (1, 3, 'Lei
 
 INSERT INTO user_lists (user_id, list_id, store_id) VALUES (1, 1, 1);
 INSERT INTO user_lists (user_id, list_id, store_id) VALUES (1, 2, 1);
+INSERT INTO user_lists (user_id, list_id, store_id) VALUES (2, 3, 1);
+INSERT INTO user_lists (user_id, list_id, store_id) VALUES (2, 4, 1);

@@ -24,6 +24,10 @@ type StoreMap struct {
 	Map [][]interface{} `json:"map"`
 }
 
+type StoreList struct {
+	Products []interface{} `json:"list"`
+}
+
 // StoreStoreIDListListIDDelete deletes a List
 func StoreStoreIDListListIDDelete(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
@@ -58,15 +62,68 @@ func StoreStoreIDListListIDDelete(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-// TODO get
+// StoreStoreIdListListIdGet gets a list from a given id
 func StoreStoreIdListListIdGet(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 
-	// Dummy test, shows how to use gorilla/mux
 	vars := mux.Vars(r)
-	log.Println(vars["storeId"])
-	log.Println(vars["listId"])
+
+	stmt := fmt.Sprintf(`
+	SELECT l._id, l.name, l.list
+	FROM lists AS l 
+	WHERE l._id = %s`, vars["listId"])
+
+	rows, err := db.Query(stmt)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var list List
+	var listString string
+
+	if rows.Next() {
+		err = rows.Scan(&list.Id, &list.Name, &listString)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+
+	raw := StoreList{}
+
+	err = json.Unmarshal([]byte(listString), &raw)
+	if err != nil {
+		log.Println(err)
+	}
+	
+	for i := range raw.Products {
+		stmt1 := fmt.Sprintf(`
+		SELECT p._id, p.Name, p.Description
+		FROM products AS p 
+		WHERE p._id = %v`, i + 1)
+
+		product, err := db.Query(stmt1)
+		if err != nil {
+			log.Fatal(err)
+		}
+		
+		var product1 Product
+
+		if product.Next() {
+			err = product.Scan(&product1.Id, &product1.Name, &product1.Description)
+			if err != nil {
+				log.Fatal(err)
+			}
+		}
+
+		list.Products = append(list.Products, product1)
+	}
+
+	bytes, err := json.Marshal(list)
+	if err != nil {
+		log.Fatal(err)
+	}
+	w.Write(bytes)
 }
 
 // StoreStoreIdListListIdPut update list given listId
