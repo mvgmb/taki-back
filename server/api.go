@@ -148,7 +148,9 @@ func StoreStoreIdProductsGet(w http.ResponseWriter, r *http.Request) {
 
 	rows, err := db.Query(stmt)
 	if err != nil {
-		log.Fatal(err)
+		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err)
+		return
 	}
 
 	var products []Product
@@ -157,15 +159,20 @@ func StoreStoreIdProductsGet(w http.ResponseWriter, r *http.Request) {
 	for rows.Next() {
 		err = rows.Scan(&p.Id, &p.Name, &p.Description)
 		if err != nil {
-			log.Fatal(err)
+			w.WriteHeader(http.StatusBadRequest)
+			log.Println(err)
+			return
 		}
 		products = append(products, p)
 	}
 
 	bytes, err := json.Marshal(products)
 	if err != nil {
-		log.Fatal(err)
+		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err)
+		return
 	}
+
 	w.WriteHeader(http.StatusOK)
 	w.Write(bytes)
 }
