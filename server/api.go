@@ -96,11 +96,11 @@ func StoreStoreIdListListIdGet(w http.ResponseWriter, r *http.Request) {
 		log.Println(err)
 	}
 	
-	for i := range raw.Products {
+	for _, v := range raw.Products {
 		stmt1 := fmt.Sprintf(`
 		SELECT p._id, p.Name, p.Description
 		FROM products AS p 
-		WHERE p._id = %v`, i + 1)
+		WHERE p._id = %v`, v)
 
 		product, err := db.Query(stmt1)
 		if err != nil {
