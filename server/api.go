@@ -192,11 +192,12 @@ func UserGet(w http.ResponseWriter, r *http.Request) {
 // UserNewPost registers a new User
 func UserNewPost(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	w.WriteHeader(http.StatusOK)
 
 	user, err := parseUser(r)
 	if err != nil {
-		log.Fatal(err)
+		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err)
+		return
 	}
 
 	stmt := fmt.Sprintf(`
@@ -205,6 +206,10 @@ func UserNewPost(w http.ResponseWriter, r *http.Request) {
 
 	_, err = db.Query(stmt)
 	if err != nil {
-		log.Fatal(err)
+		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err)
+		return
 	}
+
+	w.WriteHeader(http.StatusOK)
 }
