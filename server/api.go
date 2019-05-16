@@ -64,7 +64,13 @@ func StoreStoreIdListsGet(w http.ResponseWriter, r *http.Request) {
 // StoreStoreIdMapGet return the Map of a given Store
 func StoreStoreIdMapGet(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	w.WriteHeader(http.StatusOK)
+
+	_, err := checkAuthentication(r)
+	if err != nil {
+		w.WriteHeader(http.StatusUnauthorized)
+		log.Println(err)
+		return
+	}
 
 	vars := mux.Vars(r)
 
@@ -75,7 +81,9 @@ func StoreStoreIdMapGet(w http.ResponseWriter, r *http.Request) {
 
 	rows, err := db.Query(stmt)
 	if err != nil {
-		log.Fatal(err)
+		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err)
+		return
 	}
 
 	var mapString string
@@ -83,7 +91,9 @@ func StoreStoreIdMapGet(w http.ResponseWriter, r *http.Request) {
 	if rows.Next() {
 		err = rows.Scan(&mapString)
 		if err != nil {
-			log.Fatal(err)
+			w.WriteHeader(http.StatusBadRequest)
+			log.Println(err)
+			return
 		}
 	}
 
@@ -91,7 +101,9 @@ func StoreStoreIdMapGet(w http.ResponseWriter, r *http.Request) {
 
 	err = json.Unmarshal([]byte(mapString), &raw)
 	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
 		log.Println(err)
+		return
 	}
 
 	var storeMap ModelMap
@@ -104,12 +116,16 @@ func StoreStoreIdMapGet(w http.ResponseWriter, r *http.Request) {
 
 			aisle, err := strconv.Atoi(slot[1].(string))
 			if err != nil {
-				log.Fatal(err)
+				w.WriteHeader(http.StatusBadRequest)
+				log.Println(err)
+				return
 			}
 
 			direction, err := strconv.Atoi(slot[2].(string))
 			if err != nil {
-				log.Fatal(err)
+				w.WriteHeader(http.StatusBadRequest)
+				log.Println(err)
+				return
 			}
 
 			mapValue.Category = slot[0].(string)
@@ -123,8 +139,12 @@ func StoreStoreIdMapGet(w http.ResponseWriter, r *http.Request) {
 
 	bytes, err := json.Marshal(storeMap)
 	if err != nil {
-		log.Fatal(err)
+		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err)
+		return
 	}
+
+	w.WriteHeader(http.StatusOK)
 	w.Write(bytes)
 }
 
