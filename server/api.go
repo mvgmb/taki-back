@@ -40,8 +40,39 @@ func StoreStoreIdListListIdGet(w http.ResponseWriter, r *http.Request) {
 	log.Println(vars["listId"])
 }
 
+// StoreStoreIdListListIdPut update list given listId
 func StoreStoreIdListListIdPut(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+
+	_, err := checkAuthentication(r)
+	if err != nil {
+		w.WriteHeader(http.StatusUnauthorized)
+		log.Println(err)
+		return
+	}
+
+	list, err := parseList(r)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err)
+		return
+	}
+
+	vars := mux.Vars(r)
+	list_json, _ := json.Marshal(list.Products)
+
+	stmt := fmt.Sprintf(`
+	UPDATE lists
+	SET name = '%s', list = '%s'
+	WHERE _id = '%s'`, list.Name, string(list_json), vars["listId"])
+
+	_, err = db.Query(stmt)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err)
+		return
+	}
+
 	w.WriteHeader(http.StatusOK)
 }
 
@@ -50,6 +81,7 @@ func StoreStoreIdListListIdRouteGet(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
+// StoreStoreIdListNewPost create a new list given the store ID
 func StoreStoreIdListNewPost(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 
