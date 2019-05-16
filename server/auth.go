@@ -5,17 +5,17 @@ import (
 	"net/http"
 )
 
-func checkAuthentication(r *http.Request) (*User, bool, error) {
+func checkAuthentication(r *http.Request) (*User, error) {
 	userEmail, _, ok := (*r).BasicAuth()
 	if !ok {
-		return nil, false, nil
+		return nil, nil
 	}
 
 	stmt := fmt.Sprintf(`SELECT * FROM users WHERE email = '%s'`, userEmail)
 
 	rows, err := db.Query(stmt)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
 
 	var user User
@@ -23,11 +23,11 @@ func checkAuthentication(r *http.Request) (*User, bool, error) {
 	if rows.Next() {
 		err = rows.Scan(&user.Id, &user.Name, &user.Email, &user.Birthday, &user.Sex, &user.Permission)
 		if err != nil {
-			return nil, false, err
+			return nil, err
 		}
 	} else {
-		return nil, false, nil
+		return nil, nil
 	}
 
-	return &user, true, nil
+	return &user, nil
 }
