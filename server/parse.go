@@ -37,3 +37,16 @@ func parseUser(r *http.Request) (*User, error) {
 
 	return &user, nil
 }
+
+func parseList(r *http.Request) (*List, error){
+	if r.Body == nil {
+		return nil, fmt.Errorf("req.Body: %v", r.Body)
+	}
+
+	var list List
+	if err := json.NewDecoder(r.Body).Decode(&list); err != nil {
+		return nil, err
+	}
+
+	return &list, nil
+}
