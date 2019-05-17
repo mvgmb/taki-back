@@ -237,10 +237,64 @@ func StoreStoreIdListNewPost(w http.ResponseWriter, r *http.Request) {
 
 }
 
-// TODO get
+// returns a list containing the shopping lists from a (user, store) pair
 func StoreStoreIdListsGet(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+
+	user, err := checkAuthentication(r)
+	if err != nil {
+		w.WriteHeader(http.StatusUnauthorized)
+		log.Println(err)
+		return
+	}
+
+	vars := mux.Vars(r)
+
+	stmt := fmt.Sprintf(`
+	SELECT _id, name
+	FROM lists
+	WHERE _id = ANY ( 
+		SELECT list_id 
+		FROM user_lists 
+		WHERE user_id = %d AND store_id = %s
+	)`, user.Id, vars["storeId"])
+
+	rows, err := db.Query(stmt)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err)
+		return
+	}
+
+	type tempList struct {
+		ListID   string `json:"list_id"`
+		ListName string `json:"list_name"`
+	}
+
+	lists := []tempList{}
+
+	for rows.Next() {
+		var row tempList
+		err = rows.Scan(&row.ListID, &row.ListName)
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			log.Println(err)
+			return
+		}
+
+		lists = append(lists, row)
+	}
+
+	// bytes, err := json.Marshal(lists)
+	bytes, err := json.MarshalIndent(lists, "", " ") // pretty prints the json
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err)
+		return
+	}
+
 	w.WriteHeader(http.StatusOK)
+	w.Write(bytes)
 }
 
 // StoreStoreIdMapGet return the Map of a given Store
