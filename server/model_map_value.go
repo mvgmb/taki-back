@@ -19,5 +19,5 @@ type MapValue struct {
 	Aisle int32 `json:"aisle,omitempty"`
 
 	// Direction of aisle
-	Direction int32 `json:"direction,omitempty"`
+	Direction string `json:"direction,omitempty"`
 }

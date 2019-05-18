@@ -278,13 +278,6 @@ definitions:
         - "ADMINISTRATOR"
         - "MANAGER"
         - "USER"
-    example:
-      sex: 1
-      name: "name"
-      permission: "ADMINISTRATOR"
-      _id: 0
-      age: 6
-      email: "email"
   List:
     type: "object"
     properties:
@@ -299,16 +292,6 @@ definitions:
         description: "List of Products"
         items:
           $ref: "#/definitions/Product"
-    example:
-      name: "name"
-      _id: 0
-      products:
-      - name: "name"
-        description: "description"
-        _id: 0
-      - name: "name"
-        description: "description"
-        _id: 0
   Product:
     type: "object"
     properties:
@@ -321,10 +304,6 @@ definitions:
       description:
         type: "string"
         description: "Description of product"
-    example:
-      name: "name"
-      description: "description"
-      _id: 0
   Store:
     type: "object"
     properties:
@@ -336,23 +315,6 @@ definitions:
         description: "Name of store"
       map:
         $ref: "#/definitions/Map"
-    example:
-      name: "name"
-      _id: 0
-      map:
-        matrix:
-        - - category: "category"
-            aisle: 6
-            direction: 1
-          - category: "category"
-            aisle: 6
-            direction: 1
-        - - category: "category"
-            aisle: 6
-            direction: 1
-          - category: "category"
-            aisle: 6
-            direction: 1
   Map:
     type: "object"
     properties:
@@ -362,20 +324,6 @@ definitions:
           type: "array"
           items:
             $ref: "#/definitions/MapValue"
-    example:
-      matrix:
-      - - category: "category"
-          aisle: 6
-          direction: 1
-        - category: "category"
-          aisle: 6
-          direction: 1
-      - - category: "category"
-          aisle: 6
-          direction: 1
-        - category: "category"
-          aisle: 6
-          direction: 1
   MapRoute:
     type: "object"
     properties:
@@ -384,14 +332,6 @@ definitions:
         description: "Products route"
         items:
           $ref: "#/definitions/MapValue"
-    example:
-      route:
-      - category: "category"
-        aisle: 6
-        direction: 1
-      - category: "category"
-        aisle: 6
-        direction: 1
   MapValue:
     type: "object"
     properties:
@@ -402,9 +342,5 @@ definitions:
         type: "integer"
         description: "Aisle of category"
       direction:
-        type: "integer"
+        type: "string"
         description: "Direction of aisle"
-    example:
-      category: "category"
-      aisle: 6
-      direction: 1

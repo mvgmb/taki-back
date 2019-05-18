@@ -355,16 +355,9 @@ func StoreStoreIdMapGet(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 
-			direction, err := strconv.Atoi(slot[2].(string))
-			if err != nil {
-				w.WriteHeader(http.StatusBadRequest)
-				log.Println(err)
-				return
-			}
-
 			mapValue.Category = slot[0].(string)
 			mapValue.Aisle = int32(aisle)
-			mapValue.Direction = int32(direction)
+			mapValue.Direction = slot[2].(string)
 
 			row = append(row, mapValue)
 		}

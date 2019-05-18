@@ -78,9 +78,9 @@ INSERT INTO products (name, description) VALUES ('Camarao', 'Pra assar, alho e o
 INSERT INTO stores (name, map) VALUES ('Ferreira Costa', 
 '{
   "map":[
-  	[ ["Achocolatado", "1", "1"], ["Free", "1", "1"], ["Leite Condensado", "1", "1"] ],
-  	[ ["Achocolatado", "1", "1"], ["Free", "1", "1"], ["Leite Condensado", "1", "1"] ],
-  	[ ["Achocolatado", "1", "1"], ["Free", "1", "1"], ["Leite Condensado", "1", "1"] ]
+  	[ ["Achocolatado", "1", "h"], ["Free", "1", "h"], ["Leite Condensado", "1", "h"] ],
+  	[ ["Achocolatado", "1", "h"], ["Free", "1", "h"], ["Leite Condensado", "1", "h"] ],
+  	[ ["Achocolatado", "1", "h"], ["Free", "1", "h"], ["Leite Condensado", "1", "h"] ]
   ]
 }');
 
