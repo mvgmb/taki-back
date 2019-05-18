@@ -262,9 +262,9 @@ definitions:
       name:
         type: "string"
         description: "Name of user"
-      age:
-        type: "integer"
-        description: "Age of user"
+      birthday: # YYYY-MM-DD
+        type: "string"
+        description: "Birthday of user"
       sex:
         type: "integer"
         description: "Sex of user"

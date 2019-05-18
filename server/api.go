@@ -28,8 +28,8 @@ type StoreList struct {
 	Products []interface{} `json:"list"`
 }
 
-// StoreStoreIDListListIDDelete deletes a List
-func StoreStoreIDListListIDDelete(w http.ResponseWriter, r *http.Request) {
+// StoreStoreIdListListIdDelete deletes a List
+func StoreStoreIdListListIdDelete(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 
 	_, err := checkAuthentication(r)
@@ -98,8 +98,6 @@ func StoreStoreIdListListIdGet(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-
-	log.Println(listString)
 
 	raw := StoreList{}
 
@@ -184,6 +182,7 @@ func StoreStoreIdListListIdPut(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
+// TODO
 func StoreStoreIdListListIdRouteGet(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
@@ -237,7 +236,7 @@ func StoreStoreIdListNewPost(w http.ResponseWriter, r *http.Request) {
 
 }
 
-// returns a list containing the shopping lists from a (user, store) pair
+// StoreStoreIdListsGet returns a list containing the shopping lists from a (user, store) pair
 func StoreStoreIdListsGet(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 
@@ -285,8 +284,7 @@ func StoreStoreIdListsGet(w http.ResponseWriter, r *http.Request) {
 		lists = append(lists, row)
 	}
 
-	// bytes, err := json.Marshal(lists)
-	bytes, err := json.MarshalIndent(lists, "", " ") // pretty prints the json
+	bytes, err := json.Marshal(lists)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		log.Println(err)

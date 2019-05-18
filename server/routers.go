@@ -65,7 +65,7 @@ var routes = Routes{
 		"StoreStoreIdListListIdDelete",
 		strings.ToUpper("Delete"),
 		"/store/{storeId}/list/{listId}",
-		StoreStoreIDListListIDDelete,
+		StoreStoreIdListListIdDelete,
 	},
 
 	Route{

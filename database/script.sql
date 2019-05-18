@@ -61,19 +61,19 @@ INSERT INTO products (name, description) VALUES ('Toddynho', 'Achocolatado delic
 INSERT INTO products (name, description) VALUES ('Nescau Achocolatado', 'Toddynho, so que de outra marca');
 INSERT INTO products (name, description) VALUES ('Leite Moça', 'Um Leite Condensado famoso ai');
 INSERT INTO products (name, description) VALUES ('Leite', 'De vaca');
-INSERT INTO products (name, description) VALUES ('Margarina', 'Dizem que é boa no pão');
-INSERT INTO products (name, description) VALUES ('Manteiga', 'Dizem que é melhor que margarina');
-INSERT INTO products (name, description) VALUES ('Iogurte', 'Gelado é bom');
+INSERT INTO products (name, description) VALUES ('Margarina', 'Dizem que e boa no pao');
+INSERT INTO products (name, description) VALUES ('Manteiga', 'Dizem que e melhor que margarina');
+INSERT INTO products (name, description) VALUES ('Iogurte', 'Gelado e bom');
 INSERT INTO products (name, description) VALUES ('Queijo', 'Rima com vinho');
 INSERT INTO products (name, description) VALUES ('Cerveja', 'Ahhhhhhh');
 INSERT INTO products (name, description) VALUES ('Vinho', 'Rima com queijo');
 INSERT INTO products (name, description) VALUES ('Whiskey', 'Sem gelo porfavor');
 INSERT INTO products (name, description) VALUES ('Vodka', 'Bons valores nutritivos');
-INSERT INTO products (name, description) VALUES ('Cachaça', 'Uma ideia boa puxa outra');
+INSERT INTO products (name, description) VALUES ('Cachaca', 'Uma ideia boa puxa outra');
 INSERT INTO products (name, description) VALUES ('Frango', 'Cortado em bandeja');
-INSERT INTO products (name, description) VALUES ('Alcátra', 'Filé bom de assar');
+INSERT INTO products (name, description) VALUES ('Alcatra', 'File bom de assar');
 INSERT INTO products (name, description) VALUES ('Corvina', 'Peixe de couro pra cozinhar');
-INSERT INTO products (name, description) VALUES ('Camarão', 'Pra assar, alho e óleo');
+INSERT INTO products (name, description) VALUES ('Camarao', 'Pra assar, alho e oleo');
 
 INSERT INTO stores (name, map) VALUES ('Ferreira Costa', 
 '{
@@ -86,16 +86,16 @@ INSERT INTO stores (name, map) VALUES ('Ferreira Costa',
 
 INSERT INTO lists (name, list) VALUES ('Meio de semana', '{ "list": ["1","2","3","4","5","7","8"] }');
 INSERT INTO lists (name, list) VALUES ('Fim de semana', '{ "list": ["15","9","11","13","3"] }');
-INSERT INTO lists (name, list) VALUES ('Lista Boçal', '{ "list": ["16","10","8"] }');
+INSERT INTO lists (name, list) VALUES ('Lista Bocal', '{ "list": ["16","10","8"] }');
 INSERT INTO lists (name, list) VALUES ('Lista 1', '{ "list": ["1","2","7","17"] }');
 INSERT INTO lists (name, list) VALUES ('Lista 2', '{ "list": ["4","8","2","3","16"] }');
 INSERT INTO lists (name, list) VALUES ('list tatooed in reverse', '{ "list": ["1","3","6","15"] }');
 INSERT INTO lists (name, list) VALUES ('lista melhor que stairway to heaven', '{ "list": ["17","16","15","4","2"] }');
-INSERT INTO lists (name, list) VALUES ('lista pedaço do meu coração', '{ "list": ["1","2","7","17"] }');
+INSERT INTO lists (name, list) VALUES ('lista predaco do meu coracao', '{ "list": ["1","2","7","17"] }');
 INSERT INTO lists (name, list) VALUES ('lista que demora', '{ "list": ["1"] }');
 INSERT INTO lists (name, list) VALUES ('List for those who live uptown', '{ "list": ["17"] }');
 INSERT INTO lists (name, list) VALUES ('list for Johnny Marr', '{ "list": ["3","2","1","15","7","9"] }');
-INSERT INTO lists (name, list) VALUES ('lista equalizável', '{ "list": ["3","4","1","2","6","10","11"] }');
+INSERT INTO lists (name, list) VALUES ('lista equalizavel', '{ "list": ["3","4","1","2","6","10","11"] }');
 INSERT INTO lists (name, list) VALUES ('list for when london finally drown', '{ "list": ["10","12","13","14","15","17","1"] }');
 INSERT INTO lists (name, list) VALUES ('list for after the house burn', '{ "list": ["11","5","6","7","8","9","10"] }');
 
