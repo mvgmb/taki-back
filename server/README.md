@@ -12,12 +12,37 @@ By using the [OpenAPI-Spec](https://github.com/OAI/OpenAPI-Specification) from a
 
 ## Paths and tests
 ```bash
+# /user
+curl -u alexandro@gmail.com: -X GET "localhost:8080/user" -H  "accept: application/json"
+
 # /user/new
 curl -X POST -u alexandro@gmail.com: "localhost:8080/user/new" -H  "accept: application/json" -H  "Content-Type: application/json"  -d "{  \"sex\": 1,  \"name\": \"name\",  \"permission\": \"ADMINISTRATOR\",  \"_id\": 0,  \"birthday\": \"1965-07-11\",  \"email\": \"email\"}"
 
-# /store/1/list/1  DELETE
-curl -u alexandro@gmail.com: -X DELETE "LOCALHOST:8080/store/1/list/1" -H  "accept: application/json"
+# /stores
+curl -u alexandro@gmail.com: -X GET "localhost:8080/stores" -H  "accept: application/json"
 
-# /store/1/list/1 GET
+# /store/{storeId}/products
+curl -u alexandro@gmail.com: -X GET "localhost:8080/store/1/products" -H  "accept: application/json"
+
+# /store/{storeId}/new
+curl -u alexandro@gmail.com: -X POST "localhost:8080/store/1/list/new" -H  "accept: application/json" -H  "Content-Type: application/json" -d "{  \"name\": \"name\",  \"_id\": 0,  \"products\": [    {      \"name\": \"name\",      \"description\": \"description\",      \"_id\": 0    },    {      \"name\": \"name\",      \"description\": \"description\",      \"_id\": 0    }  ]}"
+
+# /store/{storeId}/lists
+curl -u alexandro@gmail.com: -X GET "localhost:8080/store/1/lists" -H  "accept: application/json"
+
+# /store/{storeId}/list/{listId}
 curl -u alexandro@gmail.com: -X GET "localhost:8080/store/1/list/1" -H  "accept: application/json"
+
+# /store/{storeId}/list/{listId}
+curl -u alexandro@gmail.com: -X PUT "localhost:8080/store/1/list/1" -H  "accept: application/json" -H  "Content-Type: application/json" -d "{  \"name\": \"name\",  \"_id\": 0,  \"products\": [    {      \"name\": \"name\",      \"description\": \"description\",      \"_id\": 0    },    {      \"name\": \"name\",      \"description\": \"description\",      \"_id\": 0    }  ]}"
+
+# /store/{storeId}/list/{listId}
+curl -u alexandro@gmail.com: -X DELETE "localhost:8080/store/1/list/1" -H  "accept: application/json"
+
+# /store/{storeId}/list/{listId}/route
+curl -u alexandro@gmail.com: -X GET "localhost:8080/store/1/list/1/route" -H  "accept: application/json"
+
+# /store/{storeId}/map
+curl -u alexandro@gmail.com: -X GET "localhost:8080/store/1/map" -H  "accept: application/json"
+
 ```
