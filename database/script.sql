@@ -83,6 +83,14 @@ INSERT INTO stores (name, map) VALUES ('Ferreira Costa',
   	[ ["Achocolatado", "1", "h"], ["Free", "1", "h"], ["Leite Condensado", "1", "h"] ]
   ]
 }');
+INSERT INTO stores (name, map) VALUES ('Tupan', 
+'{
+  "map":[
+  	[ ["Arroz", "1", "v"], ["Feijão", "1", "v"], ["Macarrão", "1", "v"] ],
+  	[ ["Arroz", "1", "v"], ["Feijão", "1", "v"], ["Macarrão", "1", "v"] ],
+  	[ ["Arroz", "1", "v"], ["Feijão", "1", "v"], ["Macarrão", "1", "v"] ]
+  ]
+}');
 
 INSERT INTO lists (name, list) VALUES ('Meio de semana', '{ "list": ["1","2","3","4","5","7","8"] }');
 INSERT INTO lists (name, list) VALUES ('Fim de semana', '{ "list": ["15","9","11","13","3"] }');

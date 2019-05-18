@@ -424,10 +424,52 @@ func StoreStoreIdProductsGet(w http.ResponseWriter, r *http.Request) {
 	w.Write(bytes)
 }
 
-// TODO get
+// StoresGet return all of the stores
 func StoresGet(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+
+	_, err := checkAuthentication(r)
+	if err != nil {
+		w.WriteHeader(http.StatusUnauthorized)
+		log.Println(err)
+		return
+	}
+
+	stmt := fmt.Sprintf(`
+	SELECT _id, name
+	FROM stores`)
+
+	rows, err := db.Query(stmt)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err)
+		return
+	}
+	
+	var stores []Store
+
+	for rows.Next() {
+		var store Store
+		err = rows.Scan(&store.Id, &store.Name)
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			log.Println(err)
+			return
+		}
+
+		stores = append(stores,store)
+	}
+
+	bytes, err := json.Marshal(stores)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err)
+		return
+	}
+
 	w.WriteHeader(http.StatusOK)
+	w.Write(bytes)
+
 }
 
 // UserGet returns an User information
