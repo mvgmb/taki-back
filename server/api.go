@@ -15,7 +15,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"strconv"
 
 	"github.com/gorilla/mux"
 )
@@ -75,67 +74,14 @@ func StoreStoreIdListListIdGet(w http.ResponseWriter, r *http.Request) {
 
 	vars := mux.Vars(r)
 
-	stmt := fmt.Sprintf(`
-	SELECT l._id, l.name, l.list
-	FROM lists AS l 
-	WHERE l._id = %s`, vars["listId"])
-
-	rows, err := db.Query(stmt)
+	list, err := getList(vars["listId"])
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		log.Println(err)
 		return
 	}
 
-	var list List
-	var listString string
-
-	if rows.Next() {
-		err = rows.Scan(&list.Id, &list.Name, &listString)
-		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			log.Println(err)
-			return
-		}
-	}
-
-	raw := StoreList{}
-
-	err = json.Unmarshal([]byte(listString), &raw)
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		log.Println(err)
-		return
-	}
-
-	for _, v := range raw.Products {
-		stmt1 := fmt.Sprintf(`
-		SELECT p._id, p.Name, p.Description
-		FROM products AS p 
-		WHERE p._id = %v`, v)
-
-		product, err := db.Query(stmt1)
-		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			log.Println(err)
-			return
-		}
-
-		var product1 Product
-
-		if product.Next() {
-			err = product.Scan(&product1.Id, &product1.Name, &product1.Description)
-			if err != nil {
-				w.WriteHeader(http.StatusBadRequest)
-				log.Println(err)
-				return
-			}
-		}
-
-		list.Products = append(list.Products, product1)
-	}
-
-	bytes, err := json.Marshal(list)
+	bytes, err := json.Marshal(*list)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		log.Println(err)
@@ -165,7 +111,12 @@ func StoreStoreIdListListIdPut(w http.ResponseWriter, r *http.Request) {
 	}
 
 	vars := mux.Vars(r)
-	list_json, _ := json.Marshal(list.Products)
+	list_json, err := json.Marshal(list.Products)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err)
+		return
+	}
 
 	stmt := fmt.Sprintf(`
 	UPDATE lists
@@ -185,7 +136,25 @@ func StoreStoreIdListListIdPut(w http.ResponseWriter, r *http.Request) {
 // TODO
 func StoreStoreIdListListIdRouteGet(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+
+	vars := mux.Vars(r)
+
+	route, err := mapRoute(vars["storeId"], vars["listId"])
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err)
+		return
+	}
+
+	json_route, err := json.Marshal(route)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err)
+		return
+	}
+
 	w.WriteHeader(http.StatusOK)
+	w.Write(json_route)
 }
 
 // StoreStoreIdListNewPost create a new list given the store ID
@@ -308,63 +277,14 @@ func StoreStoreIdMapGet(w http.ResponseWriter, r *http.Request) {
 
 	vars := mux.Vars(r)
 
-	stmt := fmt.Sprintf(`
-	SELECT map
-	FROM stores 
-	WHERE _id = %s`, vars["storeId"])
-
-	rows, err := db.Query(stmt)
+	storeMap, err := getMap(vars["storeId"])
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		log.Println(err)
 		return
 	}
 
-	var mapString string
-
-	if rows.Next() {
-		err = rows.Scan(&mapString)
-		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			log.Println(err)
-			return
-		}
-	}
-
-	raw := StoreMap{}
-
-	err = json.Unmarshal([]byte(mapString), &raw)
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		log.Println(err)
-		return
-	}
-
-	var storeMap ModelMap
-	var mapValue MapValue
-
-	for i := range raw.Map {
-		var row []MapValue
-		for j := range raw.Map[i] {
-			slot := raw.Map[i][j].([]interface{})
-
-			aisle, err := strconv.Atoi(slot[1].(string))
-			if err != nil {
-				w.WriteHeader(http.StatusBadRequest)
-				log.Println(err)
-				return
-			}
-
-			mapValue.Category = slot[0].(string)
-			mapValue.Aisle = int32(aisle)
-			mapValue.Direction = slot[2].(string)
-
-			row = append(row, mapValue)
-		}
-		storeMap.Matrix = append(storeMap.Matrix, row)
-	}
-
-	bytes, err := json.Marshal(storeMap)
+	bytes, err := json.Marshal(*storeMap)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		log.Println(err)
@@ -445,7 +365,7 @@ func StoresGet(w http.ResponseWriter, r *http.Request) {
 		log.Println(err)
 		return
 	}
-	
+
 	var stores []Store
 
 	for rows.Next() {
@@ -457,7 +377,7 @@ func StoresGet(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		stores = append(stores,store)
+		stores = append(stores, store)
 	}
 
 	bytes, err := json.Marshal(stores)

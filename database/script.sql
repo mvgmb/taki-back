@@ -60,12 +60,12 @@ INSERT INTO users (name, email, birthday, sex, permission) VALUES ('david byrne'
 INSERT INTO products (name, description) VALUES ('Toddynho', 'Achocolatado delicioso');
 INSERT INTO products (name, description) VALUES ('Nescau Achocolatado', 'Toddynho, so que de outra marca');
 INSERT INTO products (name, description) VALUES ('Leite Moça', 'Um Leite Condensado famoso ai');
-INSERT INTO products (name, description) VALUES ('Leite', 'De vaca');
+INSERT INTO products (name, description) VALUES ('Leite', 'De vaca'); -- arco iris
 INSERT INTO products (name, description) VALUES ('Margarina', 'Dizem que e boa no pao');
 INSERT INTO products (name, description) VALUES ('Manteiga', 'Dizem que e melhor que margarina');
 INSERT INTO products (name, description) VALUES ('Iogurte', 'Gelado e bom');
 INSERT INTO products (name, description) VALUES ('Queijo', 'Rima com vinho');
-INSERT INTO products (name, description) VALUES ('Cerveja', 'Ahhhhhhh');
+INSERT INTO products (name, description) VALUES ('Cerveja', 'Ahhhhhhh'); -- arco iris
 INSERT INTO products (name, description) VALUES ('Vinho', 'Rima com queijo');
 INSERT INTO products (name, description) VALUES ('Whiskey', 'Sem gelo porfavor');
 INSERT INTO products (name, description) VALUES ('Vodka', 'Bons valores nutritivos');
@@ -74,6 +74,7 @@ INSERT INTO products (name, description) VALUES ('Frango', 'Cortado em bandeja')
 INSERT INTO products (name, description) VALUES ('Alcatra', 'File bom de assar');
 INSERT INTO products (name, description) VALUES ('Corvina', 'Peixe de couro pra cozinhar');
 INSERT INTO products (name, description) VALUES ('Camarao', 'Pra assar, alho e oleo');
+INSERT INTO products (name, description) VALUES ('Oreo', 'Equivalente a ostentacao, so que em forma de biscoito'); -- arco iris
 
 INSERT INTO stores (name, map) VALUES ('Ferreira Costa', 
 '{
@@ -86,7 +87,7 @@ INSERT INTO stores (name, map) VALUES ('Ferreira Costa',
 INSERT INTO stores (name, map) VALUES ('Arco Iris', 
 '{
   "map":[
-  	[ ["Start", "0", "v"],       ["Start", "0", "v"],   ["Free", "0", "v"],          ["Free", "0", "v"],      ["Free", "0", "v"],    ["Free", "0", "v"],         ["Free", "0", "v"],       ["Free", "0", "v"],  ["Free", "0", "v"],             ["Free", "0", "v"],      ["Free", "0", "v"],  ["Free", "0", "v"],  ["Free", "0", "v"],      ["Free", "0", "v"],        ["Free", "0", "v"],        ["Free", "0", "v"],        ["Free", "0", "v"],        ["Free", "0", "v"] ],
+  	[ ["Start", "0", "v"],       ["Free", "0", "v"],    ["Free", "0", "v"],          ["Free", "0", "v"],      ["Free", "0", "v"],    ["Free", "0", "v"],         ["Free", "0", "v"],       ["Free", "0", "v"],  ["Free", "0", "v"],             ["Free", "0", "v"],      ["Free", "0", "v"],  ["Free", "0", "v"],  ["Free", "0", "v"],      ["Free", "0", "v"],        ["Free", "0", "v"],        ["Free", "0", "v"],        ["Free", "0", "v"],        ["Free", "0", "v"] ],
   	[ ["Eletronicos", "1", "v"], ["Free", "1", "v"],    ["Leites", "1", "v"],        ["Biscoitos", "2", "v"], ["Free", "2", "v"],    ["Massas", "2", "v"],       ["Higiene", "3", "v"],    ["Free", "3", "v"],  ["Higiene", "3", "v"],          ["Limpeza", "4", "v"],   ["Free", "4", "v"],  ["Bazar", "4", "v"], ["Graos", "5", "v"],     ["Free", "5", "v"],        ["Frangos", "5", "v"],     ["Peixes", "6", "v"],      ["Free", "6", "v"],        ["Sorvetes", "6", "v"] ],
   	[ ["Eletronicos", "1", "v"], ["Free", "1", "v"],    ["Leites", "1", "v"],        ["Biscoitos", "2", "v"], ["Free", "2", "v"],    ["Massas", "2", "v"],       ["Higiene", "3", "v"],    ["Free", "3", "v"],  ["Higiene", "3", "v"],          ["Limpeza", "4", "v"],   ["Free", "4", "v"],  ["Bazar", "4", "v"], ["Graos", "5", "v"],     ["Free", "5", "v"],        ["Frangos", "5", "v"],     ["Peixes", "6", "v"],      ["Free", "6", "v"],        ["Sorvetes", "6", "v"] ],
   	[ ["Eletronicos", "1", "v"], ["Free", "1", "v"],    ["Leites", "1", "v"],        ["Biscoitos", "2", "v"], ["Free", "2", "v"],    ["Massas", "2", "v"],       ["Higiene", "3", "v"],    ["Free", "3", "v"],  ["Higiene", "3", "v"],          ["Limpeza", "4", "v"],   ["Free", "4", "v"],  ["Bazar", "4", "v"], ["Graos", "5", "v"],     ["Free", "5", "v"],        ["Frangos", "5", "v"],     ["Peixes", "6", "v"],      ["Free", "6", "v"],        ["Sorvetes", "6", "v"] ],
@@ -115,6 +116,7 @@ INSERT INTO stores (name, map) VALUES ('Tupan',
   ]
 }');
 
+INSERT INTO lists (name, list) VALUES ('Feira Arco Iris', '{ "list": ["4","18", "9"] }'); -- arco iris
 INSERT INTO lists (name, list) VALUES ('Meio de semana', '{ "list": ["1","2","3","4","5","7","8"] }');
 INSERT INTO lists (name, list) VALUES ('Fim de semana', '{ "list": ["15","9","11","13","3"] }');
 INSERT INTO lists (name, list) VALUES ('Lista Bocal', '{ "list": ["16","10","8"] }');
@@ -147,8 +149,11 @@ INSERT INTO product_category (store_id, product_id, category) VALUES (1, 14, 'Ca
 INSERT INTO product_category (store_id, product_id, category) VALUES (1, 15, 'Carnes e Peixes');
 INSERT INTO product_category (store_id, product_id, category) VALUES (1, 16, 'Carnes e Peixes');
 INSERT INTO product_category (store_id, product_id, category) VALUES (1, 17, 'Carnes e Peixes');
+INSERT INTO product_category (store_id, product_id, category) VALUES (2, 4, 'Leites'); -- arco iris
+INSERT INTO product_category (store_id, product_id, category) VALUES (2, 18, 'Biscoitos'); -- arco iris
+INSERT INTO product_category (store_id, product_id, category) VALUES (2, 9, 'Bebidas'); -- arco iris
 
-INSERT INTO user_lists (user_id, list_id, store_id) VALUES (1, 1, 1);
+INSERT INTO user_lists (user_id, list_id, store_id) VALUES (1, 1, 2); -- arco iris
 INSERT INTO user_lists (user_id, list_id, store_id) VALUES (1, 2, 1);
 INSERT INTO user_lists (user_id, list_id, store_id) VALUES (3, 3, 1);
 INSERT INTO user_lists (user_id, list_id, store_id) VALUES (2, 4, 1);
@@ -162,3 +167,4 @@ INSERT INTO user_lists (user_id, list_id, store_id) VALUES (9, 11, 1);
 INSERT INTO user_lists (user_id, list_id, store_id) VALUES (10, 12, 1);
 INSERT INTO user_lists (user_id, list_id, store_id) VALUES (11, 13, 1);
 INSERT INTO user_lists (user_id, list_id, store_id) VALUES (12, 14, 1);
+INSERT INTO user_lists (user_id, list_id, store_id) VALUES (12, 15, 1);

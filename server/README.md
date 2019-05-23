@@ -39,8 +39,8 @@ curl -u alexandro@gmail.com: -X PUT "localhost:8080/store/1/list/1" -H  "accept:
 # /store/{storeId}/list/{listId}
 curl -u alexandro@gmail.com: -X DELETE "localhost:8080/store/1/list/1" -H  "accept: application/json"
 
-# /store/{storeId}/list/{listId}/route
-curl -u alexandro@gmail.com: -X GET "localhost:8080/store/1/list/1/route" -H  "accept: application/json"
+# /store/{storeId}/list/{listId}/route -- arco iris
+curl -u alexandro@gmail.com: -X GET "localhost:8080/store/2/list/1/route" -H  "accept: application/json"
 
 # /store/{storeId}/map
 curl -u alexandro@gmail.com: -X GET "localhost:8080/store/1/map" -H  "accept: application/json"
