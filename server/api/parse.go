@@ -1,4 +1,4 @@
-package server
+package api
 
 import (
 	"encoding/json"
@@ -38,7 +38,7 @@ func parseUser(r *http.Request) (*User, error) {
 	return &user, nil
 }
 
-func parseList(r *http.Request) (*List, error){
+func parseList(r *http.Request) (*List, error) {
 	if r.Body == nil {
 		return nil, fmt.Errorf("req.Body: %v", r.Body)
 	}

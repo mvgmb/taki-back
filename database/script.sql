@@ -168,3 +168,5 @@ INSERT INTO user_lists (user_id, list_id, store_id) VALUES (10, 12, 1);
 INSERT INTO user_lists (user_id, list_id, store_id) VALUES (11, 13, 1);
 INSERT INTO user_lists (user_id, list_id, store_id) VALUES (12, 14, 1);
 INSERT INTO user_lists (user_id, list_id, store_id) VALUES (12, 15, 1);
+
+SELECT USER();

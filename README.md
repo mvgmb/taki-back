@@ -24,3 +24,17 @@ docker rm $(docker ps -a -q)
 ```bash
 go run main.go
 ```
+
+## Run Docker Compose
+
+```bash
+docker-compose up --build --force-recreate --remove-orphans
+```
+
+## Kill Docker Compose
+
+```bash
+docker-compose down
+```
+
+docker run --rm -e DB_ADDR=172.17.0.1 -e DB_PORT=33060 -e DB_USER=user -e DB_PASS=password -e DB_NAME=taki taki/server
