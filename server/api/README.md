@@ -21,6 +21,9 @@ curl -X POST -u alexandro@gmail.com: "localhost:8080/user/new" -H  "accept: appl
 # /stores
 curl -u alexandro@gmail.com: -X GET "localhost:8080/stores" -H  "accept: application/json"
 
+# /store/{storeId}/product/{productId}
+curl -u alexandro@gmail.com: -X GET "localhost:8080/product/1" -H  "accept: application/json"
+
 # /store/{storeId}/products
 curl -u alexandro@gmail.com: -X GET "localhost:8080/store/1/products" -H  "accept: application/json"
 

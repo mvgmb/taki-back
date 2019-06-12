@@ -18,6 +18,8 @@ type Product struct {
 	// Name of product
 	Name string `json:"name,omitempty"`
 
+	Image string `json:"image,omitempty"`
+
 	// Description of product
 	Description string `json:"description,omitempty"`
 }

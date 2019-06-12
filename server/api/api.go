@@ -15,6 +15,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/gorilla/mux"
 )
@@ -25,6 +26,60 @@ type StoreMap struct {
 
 type StoreList struct {
 	Products []interface{} `json:"list"`
+}
+
+func ProductProductIdGet(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+
+	_, err := checkAuthentication(r)
+	if err != nil {
+		w.WriteHeader(http.StatusUnauthorized)
+		log.Println(err)
+		return
+	}
+	vars := mux.Vars(r)
+
+	stmt := fmt.Sprintf(`
+		SELECT _id, name, description 
+		FROM products 
+		WHERE _id = %s`, vars["productId"])
+
+	rows, err := db.Query(stmt)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err)
+		return
+	}
+
+	var p Product
+
+	if rows.Next() {
+		err = rows.Scan(&p.Id, &p.Name, &p.Description)
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			log.Println(err)
+			return
+		}
+	}
+
+	encodedImg, err := getProductEncodedImageById(vars["productId"])
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err)
+		return
+	}
+
+	p.Image = encodedImg
+
+	bytes, err := json.Marshal(p)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	w.Write(bytes)
 }
 
 // StoreStoreIdListListIdDelete deletes a List
@@ -336,6 +391,14 @@ func StoreStoreIdProductsGet(w http.ResponseWriter, r *http.Request) {
 			log.Println(err)
 			return
 		}
+		encodedImg, err := getProductEncodedImageById(strconv.Itoa(int(p.Id)))
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			log.Println(err)
+			return
+		}
+		p.Image = encodedImg
+
 		products = append(products, p)
 	}
 

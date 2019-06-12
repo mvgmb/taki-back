@@ -1,8 +1,12 @@
 package api 
 
 import (
+	"os"
 	"fmt"
+	"encoding/base64"
 	"log"
+	"bufio"
+	"io/ioutil"
 	"encoding/json"
 	"strconv"
 )
@@ -266,4 +270,15 @@ func getList(listId string) (*List, error) {
 	}
 
 	return &list, nil
+}
+
+func getProductEncodedImageById(productId string) (string, error) {
+	f, err := os.Open(fmt.Sprintf("./images/%s.png", productId))
+	if err != nil {
+		return "", err
+	}
+	reader := bufio.NewReader(f)
+	content, _ := ioutil.ReadAll(reader)
+	
+	return base64.StdEncoding.EncodeToString(content), nil
 }

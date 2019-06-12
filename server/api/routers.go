@@ -62,6 +62,13 @@ var routes = Routes{
 	},
 
 	Route{
+		"ProductProductIdGet",
+		strings.ToUpper("Get"),
+		"/product/{productId}",
+		ProductProductIdGet,
+	},
+
+	Route{
 		"StoreStoreIdListListIdDelete",
 		strings.ToUpper("Delete"),
 		"/store/{storeId}/list/{listId}",
