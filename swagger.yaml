@@ -58,7 +58,7 @@ paths:
               $ref: "#/definitions/Store"
       security:
       - bearerAuth: []
-  /store/{storeId}/product/{productId}:
+  /product/{productId}:
     get:
       tags:
       - "anyone"
@@ -270,6 +270,33 @@ paths:
           description: "Successful response"
           schema:
             $ref: "#/definitions/Map"
+      security:
+      - bearerAuth: []
+  /store/{storeId}/search/categories/{input}:
+    get:
+      tags:
+      - "anyone"
+      description: "Gets possible categories given the users input"
+      parameters:
+      - name: "storeId"
+        in: "path"
+        description: "Id of store"
+        required: true
+        type: "string"
+        x-exportParamName: "StoreId"
+      - name: "input"
+        in: "path"
+        description: "User Input"
+        required: true
+        type: "string"
+        x-exportParamName: "Input"
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items:
+              type: "string"
       security:
       - bearerAuth: []
 securityDefinitions:

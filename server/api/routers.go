@@ -125,6 +125,13 @@ var routes = Routes{
 	},
 
 	Route{
+		"StoreStoreIdSearchCategoriesInputGet",
+		strings.ToUpper("Get"),
+		"/store/{storeId}/search/categories/{input}",
+		StoreStoreIdSearchCategoriesInputGet,
+	},
+
+	Route{
 		"StoresGet",
 		strings.ToUpper("Get"),
 		"/stores",

@@ -9,6 +9,8 @@ import (
 	"io/ioutil"
 	"encoding/json"
 	"strconv"
+
+	"github.com/sahilm/fuzzy"
 )
 
 func mapRoute(storeId, listId string) (*MapRoute, error){
@@ -281,4 +283,44 @@ func getProductEncodedImageById(productId string) (string, error) {
 	content, _ := ioutil.ReadAll(reader)
 	
 	return base64.StdEncoding.EncodeToString(content), nil
+}
+
+func GetPossibleStoreCategoriesFromProductName(userInput, storeId string) ([]string, error){
+	stmt := fmt.Sprintf(`
+	SELECT p.name, pc.category
+	FROM products AS p, product_category AS pc 
+	WHERE p._id = pc.product_id AND pc.store_id = %s`, storeId)
+	
+	rows, err := db.Query(stmt)
+	if err != nil {
+		return nil, err
+	}
+
+	var names []string
+	categories := make(map[string]string)
+	var name, category string
+
+	for rows.Next() {
+		err = rows.Scan(&name, &category)
+		if err != nil {
+			return nil, err
+		}
+		names = append(names, name)
+		categories[name] = category
+	}
+
+	matches := fuzzy.Find(userInput, names)
+	
+	possibleCategories := make([]string, len(matches))
+	unique := make(map[string]bool)
+	size := 0
+	for i := range matches {
+		if !unique[categories[matches[i].Str]] {
+			possibleCategories[i] = categories[matches[i].Str]
+			unique[categories[matches[i].Str]] = true
+			size++
+		}
+	}
+
+	return possibleCategories[:size], err
 }
