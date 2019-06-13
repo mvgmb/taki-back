@@ -1,4 +1,5 @@
 -- This script will be executed once the db is up
+SET NAMES UTF8;
 
 CREATE TABLE users (
     _id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -19,8 +20,8 @@ CREATE TABLE stores (
     _id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name TEXT,
     map JSON -- matrix
-    -- each slot == [category, aisle, direction] == [string, int, int]
-    -- direction == 0 - horizontal, 1 | vertical, 2 / right_diagonal, 3 \ left_diagonal 
+    -- each slot == [category, aisle, direction] == [string, int, string]
+    -- direction == h - horizontal, v - vertical
 );
 
 CREATE TABLE lists (
@@ -57,33 +58,58 @@ INSERT INTO users (name, email, birthday, sex, permission) VALUES ('joe strummer
 INSERT INTO users (name, email, birthday, sex, permission) VALUES ('david byrne', 'psychok@gmail.com', '1952-05-14', 0, 'USER'); 
 
 
-INSERT INTO products (name, description) VALUES ('Toddynho', 'Achocolatado delicioso');
-INSERT INTO products (name, description) VALUES ('Nescau Achocolatado', 'Toddynho, so que de outra marca');
-INSERT INTO products (name, description) VALUES ('Leite Moça', 'Um Leite Condensado famoso ai');
-INSERT INTO products (name, description) VALUES ('Leite', 'De vaca'); -- arco iris
-INSERT INTO products (name, description) VALUES ('Margarina', 'Dizem que e boa no pao');
-INSERT INTO products (name, description) VALUES ('Manteiga', 'Dizem que e melhor que margarina');
-INSERT INTO products (name, description) VALUES ('Iogurte', 'Gelado e bom');
-INSERT INTO products (name, description) VALUES ('Queijo', 'Rima com vinho');
-INSERT INTO products (name, description) VALUES ('Cerveja', 'Ahhhhhhh'); -- arco iris
-INSERT INTO products (name, description) VALUES ('Vinho', 'Rima com queijo');
-INSERT INTO products (name, description) VALUES ('Whiskey', 'Sem gelo porfavor');
-INSERT INTO products (name, description) VALUES ('Vodka', 'Bons valores nutritivos');
-INSERT INTO products (name, description) VALUES ('Cachaca', 'Uma ideia boa puxa outra');
-INSERT INTO products (name, description) VALUES ('Frango', 'Cortado em bandeja');
-INSERT INTO products (name, description) VALUES ('Alcatra', 'File bom de assar');
-INSERT INTO products (name, description) VALUES ('Corvina', 'Peixe de couro pra cozinhar');
-INSERT INTO products (name, description) VALUES ('Camarao', 'Pra assar, alho e oleo');
-INSERT INTO products (name, description) VALUES ('Oreo', 'Equivalente a ostentacao, so que em forma de biscoito'); -- arco iris
+INSERT INTO products (name, description) VALUES ('Nescau', '');
+INSERT INTO products (name, description) VALUES ('Toddynho', '');
 
-INSERT INTO stores (name, map) VALUES ('Ferreira Costa', 
-'{
-  "map":[
-  	[ ["Achocolatado", "1", "h"], ["Free", "1", "h"], ["Leite Condensado", "1", "h"] ],
-  	[ ["Achocolatado", "1", "h"], ["Free", "1", "h"], ["Leite Condensado", "1", "h"] ],
-  	[ ["Achocolatado", "1", "h"], ["Free", "1", "h"], ["Leite Condensado", "1", "h"] ]
-  ]
-}');
+INSERT INTO products (name, description) VALUES ('Leite Ninho', '');
+
+INSERT INTO products (name, description) VALUES ('Bombril', '');
+
+INSERT INTO products (name, description) VALUES ('Skoll', '');
+INSERT INTO products (name, description) VALUES ('Heineken', '');
+INSERT INTO products (name, description) VALUES ('Brahma', '');
+INSERT INTO products (name, description) VALUES ('Itaipava', '');
+INSERT INTO products (name, description) VALUES ('Budweiser', '');
+INSERT INTO products (name, description) VALUES ('Schin', '');
+
+INSERT INTO products (name, description) VALUES ('Guaraná', '');
+INSERT INTO products (name, description) VALUES ('Coca-cola', '');
+INSERT INTO products (name, description) VALUES ('Fanta', '');
+INSERT INTO products (name, description) VALUES ('Kuat', '');
+INSERT INTO products (name, description) VALUES ('Sprite', '');
+INSERT INTO products (name, description) VALUES ('Antártica', '');
+INSERT INTO products (name, description) VALUES ('Fanta uva', '');
+INSERT INTO products (name, description) VALUES ('Frevo', '');
+INSERT INTO products (name, description) VALUES ('Indaiá refri', '');
+
+INSERT INTO products (name, description) VALUES ('Paçoca', '');
+INSERT INTO products (name, description) VALUES ('Goiabada', '');
+
+INSERT INTO products (name, description) VALUES ('Twix', '');
+INSERT INTO products (name, description) VALUES ('Baton', '');
+INSERT INTO products (name, description) VALUES ('Bis', '');
+INSERT INTO products (name, description) VALUES ('Sonho de valsa', '');
+
+INSERT INTO products (name, description) VALUES ('Sardinha', '');
+INSERT INTO products (name, description) VALUES ('Atum', '');
+
+INSERT INTO products (name, description) VALUES ('Tempero', '');
+INSERT INTO products (name, description) VALUES ('Cominho', '');
+INSERT INTO products (name, description) VALUES ('Colorau', '');
+INSERT INTO products (name, description) VALUES ('Orégano', '');
+
+INSERT INTO products (name, description) VALUES ('Ruffles', '');
+INSERT INTO products (name, description) VALUES ('Cheetos', '');
+INSERT INTO products (name, description) VALUES ('Cheetos Lua', '');
+INSERT INTO products (name, description) VALUES ('Pringles', '');
+INSERT INTO products (name, description) VALUES ('Doritos', '');
+
+INSERT INTO products (name, description) VALUES ('Toddy', 'Achocolatado delicioso');
+INSERT INTO products (name, description) VALUES ('Nescau', 'Toddynho, so que de outra marca');
+
+INSERT INTO products (name, description) VALUES ('Papel higiênico', '');
+INSERT INTO products (name, description) VALUES ('Cotonetes', '');
+
 INSERT INTO stores (name, map) VALUES ('Arco Iris', 
 '{
   "map":[
@@ -134,26 +160,46 @@ INSERT INTO lists (name, list) VALUES ('list for after the house burn', '{ "list
 
 INSERT INTO product_category (store_id, product_id, category) VALUES (1, 1, 'Achocolatado');
 INSERT INTO product_category (store_id, product_id, category) VALUES (1, 2, 'Achocolatado');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 3, 'Leite Condensado');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 4, 'Laticinios');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 5, 'Laticinios');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 6, 'Laticinios');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 7, 'Laticinios');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 8, 'Laticinios');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 9, 'Bebidas Alcoolicas');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 10, 'Bebidas Alcoolicas');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 11, 'Bebidas Alcoolicas');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 12, 'Bebidas Alcoolicas');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 13, 'Bebidas Alcoolicas');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 14, 'Carnes e Peixes');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 15, 'Carnes e Peixes');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 16, 'Carnes e Peixes');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 17, 'Carnes e Peixes');
-INSERT INTO product_category (store_id, product_id, category) VALUES (2, 4, 'Leites'); -- arco iris
-INSERT INTO product_category (store_id, product_id, category) VALUES (2, 18, 'Biscoitos'); -- arco iris
-INSERT INTO product_category (store_id, product_id, category) VALUES (2, 9, 'Bebidas'); -- arco iris
+INSERT INTO product_category (store_id, product_id, category) VALUES (1, 3, 'Leite em pó');
+INSERT INTO product_category (store_id, product_id, category) VALUES (1, 4, 'Lã de Aço');
+INSERT INTO product_category (store_id, product_id, category) VALUES (1, 5, 'Cerveja');
+INSERT INTO product_category (store_id, product_id, category) VALUES (1, 6, 'Cerveja');
+INSERT INTO product_category (store_id, product_id, category) VALUES (1, 7, 'Cerveja');
+INSERT INTO product_category (store_id, product_id, category) VALUES (1, 8, 'Cerveja');
+INSERT INTO product_category (store_id, product_id, category) VALUES (1, 9, 'Cerveja');
+INSERT INTO product_category (store_id, product_id, category) VALUES (1, 10, 'Cerveja');
+INSERT INTO product_category (store_id, product_id, category) VALUES (1, 11, 'Refrigerante');
+INSERT INTO product_category (store_id, product_id, category) VALUES (1, 12, 'Refrigerante');
+INSERT INTO product_category (store_id, product_id, category) VALUES (1, 13, 'Refrigerante');
+INSERT INTO product_category (store_id, product_id, category) VALUES (1, 14, 'Refrigerante');
+INSERT INTO product_category (store_id, product_id, category) VALUES (1, 15, 'Refrigerante');
+INSERT INTO product_category (store_id, product_id, category) VALUES (1, 16, 'Refrigerante');
+INSERT INTO product_category (store_id, product_id, category) VALUES (1, 17, 'Refrigerante');
+INSERT INTO product_category (store_id, product_id, category) VALUES (1, 18, 'Refrigerante');
+INSERT INTO product_category (store_id, product_id, category) VALUES (1, 19, 'Refrigerante');
+INSERT INTO product_category (store_id, product_id, category) VALUES (1, 20, 'Doce');
+INSERT INTO product_category (store_id, product_id, category) VALUES (1, 21, 'Doce');
+INSERT INTO product_category (store_id, product_id, category) VALUES (1, 22, 'Chocolate');
+INSERT INTO product_category (store_id, product_id, category) VALUES (1, 23, 'Chocolate');
+INSERT INTO product_category (store_id, product_id, category) VALUES (1, 24, 'Chocolate');
+INSERT INTO product_category (store_id, product_id, category) VALUES (1, 25, 'Chocolate');
+INSERT INTO product_category (store_id, product_id, category) VALUES (1, 26, 'Enlatado');
+INSERT INTO product_category (store_id, product_id, category) VALUES (1, 27, 'Enlatado');
+INSERT INTO product_category (store_id, product_id, category) VALUES (1, 28, 'Condimentos');
+INSERT INTO product_category (store_id, product_id, category) VALUES (1, 29, 'Condimentos');
+INSERT INTO product_category (store_id, product_id, category) VALUES (1, 30, 'Condimentos');
+INSERT INTO product_category (store_id, product_id, category) VALUES (1, 31, 'Condimentos');
+INSERT INTO product_category (store_id, product_id, category) VALUES (1, 32, 'Salgadinho');
+INSERT INTO product_category (store_id, product_id, category) VALUES (1, 33, 'Salgadinho');
+INSERT INTO product_category (store_id, product_id, category) VALUES (1, 34, 'Salgadinho');
+INSERT INTO product_category (store_id, product_id, category) VALUES (1, 35, 'Salgadinho');
+INSERT INTO product_category (store_id, product_id, category) VALUES (1, 36, 'Salgadinho');
+INSERT INTO product_category (store_id, product_id, category) VALUES (1, 37, 'Chocolate em pó');
+INSERT INTO product_category (store_id, product_id, category) VALUES (1, 38, 'Chocolate em pó');
+INSERT INTO product_category (store_id, product_id, category) VALUES (1, 39, 'Higiene');
+INSERT INTO product_category (store_id, product_id, category) VALUES (1, 40, 'Higiene');
 
-INSERT INTO user_lists (user_id, list_id, store_id) VALUES (1, 1, 2); -- arco iris
+INSERT INTO user_lists (user_id, list_id, store_id) VALUES (1, 1, 1);
 INSERT INTO user_lists (user_id, list_id, store_id) VALUES (1, 2, 1);
 INSERT INTO user_lists (user_id, list_id, store_id) VALUES (3, 3, 1);
 INSERT INTO user_lists (user_id, list_id, store_id) VALUES (2, 4, 1);
