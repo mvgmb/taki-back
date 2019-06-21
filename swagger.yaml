@@ -104,6 +104,52 @@ paths:
               $ref: "#/definitions/Product"
       security:
       - bearerAuth: []
+  /category/{categoryId}:
+    get:
+      tags:
+      - "anyone"
+      description: "Gets `Category` object from store"
+      parameters:
+      - name: "storeId"
+        in: "path"
+        description: "Id of store"
+        required: true
+        type: "string"
+        x-exportParamName: "StoreId"
+      - name: "categoryId"
+        in: "path"
+        description: "Id of category"
+        required: true
+        type: "string"
+        x-exportParamName: "CategoryId"
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            $ref: "#/definitions/Category"
+      security:
+      - bearerAuth: []
+  /store/{storeId}/categories:
+    get:
+      tags:
+      - "anyone"
+      description: "Gets all `Category` objects from store"
+      parameters:
+      - name: "storeId"
+        in: "path"
+        description: "Id of store"
+        required: true
+        type: "string"
+        x-exportParamName: "StoreId"
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Category"
+      security:
+      - bearerAuth: []  
   /store/{storeId}/list/new:
     post:
       tags:
@@ -253,6 +299,107 @@ paths:
             $ref: "#/definitions/MapRoute"
       security:
       - bearerAuth: []
+  /store/{storeId}/categorylist/{categoryListId}:
+    get:
+      tags:
+      - "anyone"
+      description: "Gets `CategoryList` objects"
+      parameters:
+      - name: "storeId"
+        in: "path"
+        description: "Id of store"
+        required: true
+        type: "string"
+        x-exportParamName: "StoreId"
+      - name: "categoryListId"
+        in: "path"
+        description: "Id of list of categories"
+        required: true
+        type: "string"
+        x-exportParamName: "categorylistId"
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            $ref: "#/definitions/CategoryList"
+      security:
+      - bearerAuth: []
+    put:
+      tags:
+      - "anyone"
+      description: "Puts `CategoryList` object"
+      parameters:
+      - name: "storeId"
+        in: "path"
+        description: "Id of store"
+        required: true
+        type: "string"
+        x-exportParamName: "StoreId"
+      - name: "categoryListId"
+        in: "path"
+        description: "Id of categoryList"
+        required: true
+        type: "string"
+        x-exportParamName: "categoryListId"
+      - in: "body"
+        name: "categoryList"
+        description: "`CategoryList` object"
+        required: true
+        schema:
+          $ref: "#/definitions/CategoryList"
+        x-exportParamName: "CategoryList"
+      responses:
+        202:
+          description: "Successful response"
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - "anyone"
+      description: "Deletes `CategoryList` object"
+      parameters:
+      - name: "storeId"
+        in: "path"
+        description: "Id of store"
+        required: true
+        type: "string"
+        x-exportParamName: "StoreId"
+      - name: "categoryListId"
+        in: "path"
+        description: "Id of CategoryList to delete"
+        required: true
+        type: "string"
+        x-exportParamName: "categoryListId"
+      responses:
+        202:
+          description: "Successful response"
+      security:
+      - bearerAuth: []
+  /store/{storeId}/categorylist/{categoryListId}/route:
+    get:
+      tags:
+      - "anyone"
+      description: "Gets `MapRoute` object"
+      parameters:
+      - name: "storeId"
+        in: "path"
+        description: "Id of store"
+        required: true
+        type: "string"
+        x-exportParamName: "StoreId"
+      - name: "categoryListId"
+        in: "path"
+        description: "Id of CategoryList of categories"
+        required: true
+        type: "string"
+        x-exportParamName: "categoryListId"
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            $ref: "#/definitions/MapRoute"
+      security:
+      - bearerAuth: []
   /store/{storeId}/map:
     get:
       tags:
@@ -330,6 +477,34 @@ definitions:
         - "ADMINISTRATOR"
         - "MANAGER"
         - "USER"
+  Product:
+    type: "object"
+    properties:
+      _id:
+        type: "integer"
+        description: "Unique identifier representing a specific Product"
+      name:
+        type: "string"
+        description: "Name of product"
+      description:
+        type: "string"
+        description: "Description of product"
+  Category:
+    type: "object"
+    properties:
+      _id:
+        type: "integer"
+        description: "Unique identifier representing a specific Category"
+      name:
+        type: "string"
+        description: "Name of category"
+      image:
+        type: "string"
+        format: "byte"
+        pattern: "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$"
+      description:
+        type: "string"
+        description: "Description of category"
   List:
     type: "object"
     properties:
@@ -344,22 +519,20 @@ definitions:
         description: "List of Products"
         items:
           $ref: "#/definitions/Product"
-  Product:
+  CategoryList:
     type: "object"
     properties:
       _id:
         type: "integer"
-        description: "Unique identifier representing a specific Product"
+        description: "Unique identifier representing a specific CategoryList"
       name:
         type: "string"
-        description: "Name of product"
-      image:
-        type: "string"
-        format: "byte"
-        pattern: "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$"
-      description:
-        type: "string"
-        description: "Description of product"
+        description: "Name of list"
+      products:
+        type: "array"
+        description: "List of Categories"
+        items:
+          $ref: "#/definitions/Category"
   Store:
     type: "object"
     properties:

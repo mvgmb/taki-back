@@ -15,7 +15,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"strconv"
 
 	"github.com/gorilla/mux"
 )
@@ -26,6 +25,10 @@ type StoreMap struct {
 
 type StoreList struct {
 	Products []interface{} `json:"list"`
+}
+
+func CategoryCategoryIdGet(w http.ResponseWriter, r *http.Request) {
+	// TODO
 }
 
 func ProductProductIdGet(w http.ResponseWriter, r *http.Request) {
@@ -62,15 +65,6 @@ func ProductProductIdGet(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	encodedImg, err := getProductEncodedImageById(vars["productId"])
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		log.Println(err)
-		return
-	}
-
-	p.Image = encodedImg
-
 	bytes, err := json.Marshal(p)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -82,7 +76,26 @@ func ProductProductIdGet(w http.ResponseWriter, r *http.Request) {
 	w.Write(bytes)
 }
 
-// StoreStoreIdListListIdDelete deletes a List
+func StoreStoreIdCategoriesGet(w http.ResponseWriter, r *http.Request) {
+	// TODO
+}
+
+func StoreStoreIdCategorylistCategoryListIdDelete(w http.ResponseWriter, r *http.Request) {
+	// TODO
+}
+
+func StoreStoreIdCategorylistCategoryListIdGet(w http.ResponseWriter, r *http.Request) {
+	// TODO
+}
+
+func StoreStoreIdCategorylistCategoryListIdPut(w http.ResponseWriter, r *http.Request) {
+	// TODO
+}
+
+func StoreStoreIdCategorylistCategoryListIdRouteGet(w http.ResponseWriter, r *http.Request) {
+	// TODO
+}
+
 func StoreStoreIdListListIdDelete(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 
@@ -116,7 +129,6 @@ func StoreStoreIdListListIdDelete(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-// StoreStoreIdListListIdGet gets a list from a given id
 func StoreStoreIdListListIdGet(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 
@@ -147,7 +159,6 @@ func StoreStoreIdListListIdGet(w http.ResponseWriter, r *http.Request) {
 	w.Write(bytes)
 }
 
-// StoreStoreIdListListIdPut update list given listId
 func StoreStoreIdListListIdPut(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 
@@ -218,7 +229,6 @@ func StoreStoreIdListListIdRouteGet(w http.ResponseWriter, r *http.Request) {
 	w.Write(json_route)
 }
 
-// StoreStoreIdListNewPost create a new list given the store ID
 func StoreStoreIdListNewPost(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 
@@ -266,7 +276,6 @@ func StoreStoreIdListNewPost(w http.ResponseWriter, r *http.Request) {
 
 }
 
-// StoreStoreIdListsGet returns a list containing the shopping lists from a (user, store) pair
 func StoreStoreIdListsGet(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 
@@ -325,7 +334,6 @@ func StoreStoreIdListsGet(w http.ResponseWriter, r *http.Request) {
 	w.Write(bytes)
 }
 
-// StoreStoreIdMapGet return the Map of a given Store
 func StoreStoreIdMapGet(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 
@@ -356,7 +364,6 @@ func StoreStoreIdMapGet(w http.ResponseWriter, r *http.Request) {
 	w.Write(bytes)
 }
 
-// StoreStoreIdProductsGet returns all Products of a given Store
 func StoreStoreIdProductsGet(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 
@@ -391,14 +398,6 @@ func StoreStoreIdProductsGet(w http.ResponseWriter, r *http.Request) {
 			log.Println(err)
 			return
 		}
-		encodedImg, err := getProductEncodedImageById(strconv.Itoa(int(p.Id)))
-		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			log.Println(err)
-			return
-		}
-		p.Image = encodedImg
-
 		products = append(products, p)
 	}
 
@@ -443,7 +442,6 @@ func StoreStoreIdSearchCategoriesInputGet(w http.ResponseWriter, r *http.Request
 	w.Write(bytes)
 }
 
-// StoresGet return all of the stores
 func StoresGet(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 
@@ -491,7 +489,6 @@ func StoresGet(w http.ResponseWriter, r *http.Request) {
 
 }
 
-// UserGet returns an User information
 func UserGet(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 
@@ -513,7 +510,6 @@ func UserGet(w http.ResponseWriter, r *http.Request) {
 	w.Write(bytes)
 }
 
-// UserNewPost registers a new User
 func UserNewPost(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 

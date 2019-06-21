@@ -10,14 +10,16 @@
 
 package api
 
-type Product struct {
+type Category struct {
 
-	// Unique identifier representing a specific Product
+	// Unique identifier representing a specific Category
 	Id int32 `json:"_id,omitempty"`
 
-	// Name of product
+	// Name of category
 	Name string `json:"name,omitempty"`
 
-	// Description of product
+	Image string `json:"image,omitempty"`
+
+	// Description of category
 	Description string `json:"description,omitempty"`
 }

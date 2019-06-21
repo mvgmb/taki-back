@@ -62,10 +62,52 @@ var routes = Routes{
 	},
 
 	Route{
+		"CategoryCategoryIdGet",
+		strings.ToUpper("Get"),
+		"/category/{categoryId}",
+		CategoryCategoryIdGet,
+	},
+
+	Route{
 		"ProductProductIdGet",
 		strings.ToUpper("Get"),
 		"/product/{productId}",
 		ProductProductIdGet,
+	},
+
+	Route{
+		"StoreStoreIdCategoriesGet",
+		strings.ToUpper("Get"),
+		"/store/{storeId}/categories",
+		StoreStoreIdCategoriesGet,
+	},
+
+	Route{
+		"StoreStoreIdCategorylistCategoryListIdDelete",
+		strings.ToUpper("Delete"),
+		"/store/{storeId}/categorylist/{categoryListId}",
+		StoreStoreIdCategorylistCategoryListIdDelete,
+	},
+
+	Route{
+		"StoreStoreIdCategorylistCategoryListIdGet",
+		strings.ToUpper("Get"),
+		"/store/{storeId}/categorylist/{categoryListId}",
+		StoreStoreIdCategorylistCategoryListIdGet,
+	},
+
+	Route{
+		"StoreStoreIdCategorylistCategoryListIdPut",
+		strings.ToUpper("Put"),
+		"/store/{storeId}/categorylist/{categoryListId}",
+		StoreStoreIdCategorylistCategoryListIdPut,
+	},
+
+	Route{
+		"StoreStoreIdCategorylistCategoryListIdRouteGet",
+		strings.ToUpper("Get"),
+		"/store/{storeId}/categorylist/{categoryListId}/route",
+		StoreStoreIdCategorylistCategoryListIdRouteGet,
 	},
 
 	Route{

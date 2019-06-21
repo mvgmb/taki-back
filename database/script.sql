@@ -16,6 +16,12 @@ CREATE TABLE products (
     description TEXT
 );
 
+CREATE TABLE categories (
+    _id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name TEXT, 
+    description TEXT
+);
+
 CREATE TABLE stores (
     _id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name TEXT,
@@ -30,10 +36,16 @@ CREATE TABLE lists (
     list JSON -- array of products id
 );
 
+CREATE TABLE category_lists (
+    _id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name TEXT,
+    list JSON -- array of categories id
+);
+
 CREATE TABLE product_category (
     store_id INT NOT NULL ,
     product_id INT NOT NULL,
-    category TEXT NOT NULL,
+    category_id INT NOT NULL,
     PRIMARY KEY (store_id, product_id)
 );
 
@@ -42,7 +54,6 @@ CREATE TABLE user_lists (
     list_id INT NOT NULL,
     store_id INT NOT NULL
 );
-
 
 INSERT INTO users (name, email, birthday, sex, permission) VALUES ('alex', 'alexandro@gmail.com', '1986-07-11', 0, 'USER'); 
 INSERT INTO users (name, email, birthday, sex, permission) VALUES ('valdecio', 'vald@gmail.com', '1964-02-01', 0, 'USER'); 
@@ -56,7 +67,6 @@ INSERT INTO users (name, email, birthday, sex, permission) VALUES ('steven morri
 INSERT INTO users (name, email, birthday, sex, permission) VALUES ('priscilla novaes', 'pitty@gmail.com', '1977-10-07', 1, 'USER'); 
 INSERT INTO users (name, email, birthday, sex, permission) VALUES ('joe strummer', 'tclash@gmail.com', '1952-08-21', 0, 'USER'); 
 INSERT INTO users (name, email, birthday, sex, permission) VALUES ('david byrne', 'psychok@gmail.com', '1952-05-14', 0, 'USER'); 
-
 
 INSERT INTO products (name, description) VALUES ('Nescau', '');
 INSERT INTO products (name, description) VALUES ('Toddynho', '');
@@ -158,46 +168,61 @@ INSERT INTO lists (name, list) VALUES ('lista equalizavel', '{ "list": ["3","4",
 INSERT INTO lists (name, list) VALUES ('list for when london finally drown', '{ "list": ["10","12","13","14","15","17","1"] }');
 INSERT INTO lists (name, list) VALUES ('list for after the house burn', '{ "list": ["11","5","6","7","8","9","10"] }');
 
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 1, 'Achocolatado');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 2, 'Achocolatado');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 3, 'Leite em pó');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 4, 'Lã de Aço');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 5, 'Cerveja');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 6, 'Cerveja');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 7, 'Cerveja');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 8, 'Cerveja');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 9, 'Cerveja');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 10, 'Cerveja');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 11, 'Refrigerante');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 12, 'Refrigerante');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 13, 'Refrigerante');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 14, 'Refrigerante');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 15, 'Refrigerante');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 16, 'Refrigerante');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 17, 'Refrigerante');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 18, 'Refrigerante');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 19, 'Refrigerante');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 20, 'Doce');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 21, 'Doce');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 22, 'Chocolate');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 23, 'Chocolate');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 24, 'Chocolate');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 25, 'Chocolate');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 26, 'Enlatado');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 27, 'Enlatado');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 28, 'Condimentos');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 29, 'Condimentos');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 30, 'Condimentos');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 31, 'Condimentos');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 32, 'Salgadinho');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 33, 'Salgadinho');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 34, 'Salgadinho');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 35, 'Salgadinho');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 36, 'Salgadinho');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 37, 'Chocolate em pó');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 38, 'Chocolate em pó');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 39, 'Higiene');
-INSERT INTO product_category (store_id, product_id, category) VALUES (1, 40, 'Higiene');
+INSERT INTO category_lists (name, list) VALUES ('Feira Arco Iris', '{ "list": ["12","1","6"] }');
+
+INSERT INTO categories (name, description) VALUES ('Achocolatado', '');
+INSERT INTO categories (name, description) VALUES ('Leite em pó', '');
+INSERT INTO categories (name, description) VALUES ('Lã de Aço', '');
+INSERT INTO categories (name, description) VALUES ('Cerveja', '');
+INSERT INTO categories (name, description) VALUES ('Refrigerante', '');
+INSERT INTO categories (name, description) VALUES ('Doce', '');
+INSERT INTO categories (name, description) VALUES ('Chocolate', '');
+INSERT INTO categories (name, description) VALUES ('Enlatado', '');
+INSERT INTO categories (name, description) VALUES ('Condimentos', '');
+INSERT INTO categories (name, description) VALUES ('Salgadinho', '');
+INSERT INTO categories (name, description) VALUES ('Chocolate em pó', '');
+INSERT INTO categories (name, description) VALUES ('Higiene', '');
+
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 1, 1);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 2, 1);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 3, 2);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 4, 3);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 5, 4);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 6, 4);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 7, 4);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 8, 4);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 9, 4);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 10, 4);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 11, 5);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 12, 5);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 13, 5);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 14, 5);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 15, 5);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 16, 5);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 17, 5);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 18, 5);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 19, 5);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 20, 6);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 21, 6);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 22, 7);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 23, 7);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 24, 7);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 25, 7);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 26, 8);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 27, 8);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 28, 9);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 29, 9);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 30, 9);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 31, 9);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 32, 10);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 33, 10);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 34, 10);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 35, 10);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 36, 10);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 37, 11);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 38, 11);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 39, 12);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 40, 12);
 
 INSERT INTO user_lists (user_id, list_id, store_id) VALUES (1, 1, 1);
 INSERT INTO user_lists (user_id, list_id, store_id) VALUES (1, 2, 1);
@@ -214,5 +239,3 @@ INSERT INTO user_lists (user_id, list_id, store_id) VALUES (10, 12, 1);
 INSERT INTO user_lists (user_id, list_id, store_id) VALUES (11, 13, 1);
 INSERT INTO user_lists (user_id, list_id, store_id) VALUES (12, 14, 1);
 INSERT INTO user_lists (user_id, list_id, store_id) VALUES (12, 15, 1);
-
-SELECT USER();

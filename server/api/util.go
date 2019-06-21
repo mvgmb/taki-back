@@ -143,9 +143,9 @@ func clearMatrix(matrix *[][]bool) {
 
 func getProductCategory(storeId string, productId int32) (string, error) {
 	stmt := fmt.Sprintf(`
-	SELECT category
-	FROM product_category 
-	WHERE store_id = %s AND product_id = %d`, storeId, productId)
+	SELECT c.name
+	FROM product_category AS pc, categories AS c
+	WHERE pc.store_id = %s AND pc.product_id = %d AND pc.category_id = c._id`, storeId, productId)
 
 	rows, err := db.Query(stmt)
 	if err != nil {
@@ -287,9 +287,9 @@ func getProductEncodedImageById(productId string) (string, error) {
 
 func GetPossibleStoreCategoriesFromProductName(userInput, storeId string) ([]string, error){
 	stmt := fmt.Sprintf(`
-	SELECT p.name, pc.category
-	FROM products AS p, product_category AS pc 
-	WHERE p._id = pc.product_id AND pc.store_id = %s`, storeId)
+	SELECT p.name, c.name
+	FROM products AS p, product_category AS pc, categories AS c 
+	WHERE p._id = pc.product_id AND pc.store_id = %s AND pc.category_id = c._id`, storeId)
 	
 	rows, err := db.Query(stmt)
 	if err != nil {
