@@ -28,7 +28,57 @@ type StoreList struct {
 }
 
 func CategoryCategoryIdGet(w http.ResponseWriter, r *http.Request) {
-	// TODO
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+
+	_, err := checkAuthentication(r)
+	if err != nil {
+		w.WriteHeader(http.StatusUnauthorized)
+		log.Println(err)
+		return
+	}
+	vars := mux.Vars(r)
+
+	stmt := fmt.Sprintf(`
+		SELECT _id, name, description 
+		FROM categories 
+		WHERE _id = %s`, vars["categoryId"])
+
+	rows, err := db.Query(stmt)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err)
+		return
+	}
+
+	var c Category
+
+	if rows.Next() {
+		err = rows.Scan(&c.Id, &c.Name, &c.Description)
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			log.Println(err)
+			return
+		}
+	}
+
+	encodedImg, err := getProductEncodedImageById(vars["categoryId"])
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err)
+		return
+	}
+
+	c.Image = encodedImg
+
+	bytes, err := json.Marshal(c)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	w.Write(bytes)
 }
 
 func ProductProductIdGet(w http.ResponseWriter, r *http.Request) {
