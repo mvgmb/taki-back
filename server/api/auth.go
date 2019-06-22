@@ -6,10 +6,16 @@ import (
 )
 
 func checkAuthentication(r *http.Request) (*User, error) {
-	userEmail, _, ok := (*r).BasicAuth()
-	if !ok {
-		return nil, fmt.Errorf("Header does not contain Basic Authentication")
-	}
+	// ####################################################
+	// ############### TODO GOOGLE auth ###################
+	// ####################################################
+
+	// userEmail, _, ok := (*r).BasicAuth()
+	// if !ok {
+	// 	return nil, fmt.Errorf("Header does not contain Basic Authentication")
+	// }
+
+	userEmail := "alexandro@gmail.com"
 
 	stmt := fmt.Sprintf(`SELECT * FROM users WHERE email = '%s'`, userEmail)
 
