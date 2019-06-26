@@ -215,6 +215,65 @@ func getMap(storeId string) (*ModelMap, error) {
 	return &storeMap, nil
 }
 
+func getCategoryList(categoryListId string) (*CategoryList, error) {
+	stmt := fmt.Sprintf(`
+	SELECT cl._id, cl.name, cl.list
+	FROM category_lists AS cl 
+	WHERE cl._id = %s`, categoryListId)
+
+	rows, err := db.Query(stmt)
+	if err != nil {
+		log.Println(err)
+		return nil, err
+	}
+
+	var categoryList CategoryList
+	var categoryListString string
+
+	if rows.Next() {
+		err = rows.Scan(&categoryList.Id, &categoryList.Name, &categoryListString)
+		if err != nil {
+			log.Println(err)
+			return nil, err
+		}
+	}
+
+	raw := StoreList{}
+
+	err = json.Unmarshal([]byte(categoryListString), &raw)
+	if err != nil {
+		log.Println(err)
+		return nil, err
+	}
+
+	for _, v := range raw.Products {
+		stmt1 := fmt.Sprintf(`
+		SELECT c._id, c.Name, c.Description
+		FROM categories AS c 
+		WHERE c._id = %v`, v)
+
+		category, err := db.Query(stmt1)
+		if err != nil {
+			log.Println(err)
+			return nil, err
+		}
+
+		var category1 Category
+
+		if category.Next() {
+			err = category.Scan(&category1.Id, &category1.Name, &category1.Description)
+			if err != nil {
+				log.Println(err)
+				return nil, err
+			}
+		}
+
+		categoryList.Products = append(categoryList.Products, category1)
+	}
+
+	return &categoryList, nil
+}
+
 func getList(listId string) (*List, error) {
 	stmt := fmt.Sprintf(`
 	SELECT l._id, l.name, l.list

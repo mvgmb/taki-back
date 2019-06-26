@@ -135,7 +135,33 @@ func StoreStoreIdCategorylistCategoryListIdDelete(w http.ResponseWriter, r *http
 }
 
 func StoreStoreIdCategorylistCategoryListIdGet(w http.ResponseWriter, r *http.Request) {
-	// TODO
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+
+	_, err := checkAuthentication(r)
+	if err != nil {
+		w.WriteHeader(http.StatusUnauthorized)
+		log.Println(err)
+		return
+	}
+
+	vars := mux.Vars(r)
+
+	categoryList, err := getCategoryList(vars["categoryListId"])
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err)
+		return
+	}
+
+	bytes, err := json.Marshal(*categoryList)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	w.Write(bytes)
 }
 
 func StoreStoreIdCategorylistCategoryListIdPut(w http.ResponseWriter, r *http.Request) {
