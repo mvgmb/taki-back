@@ -15,6 +15,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/gorilla/mux"
 )
@@ -127,7 +128,58 @@ func ProductProductIdGet(w http.ResponseWriter, r *http.Request) {
 }
 
 func StoreStoreIdCategoriesGet(w http.ResponseWriter, r *http.Request) {
-	// TODO
+	_, err := checkAuthentication(r)
+	if err != nil {
+		w.WriteHeader(http.StatusUnauthorized)
+		log.Println(err)
+		return
+	}
+
+	vars := mux.Vars(r)
+
+	stmt := fmt.Sprintf(`
+	SELECT DISTINCT c._id, c.name, c.description 
+	FROM categories AS c, product_category AS pc 
+	WHERE c._id = pc.category_id AND pc.store_id = %s`, vars["storeId"])
+
+	rows, err := db.Query(stmt)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err)
+		return
+	}
+
+	var categories []Category
+	var c Category
+
+	for rows.Next() {
+		err = rows.Scan(&c.Id, &c.Name, &c.Description)
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			log.Println(err)
+			return
+		}
+
+		encodedImg, err := getProductEncodedImageById(strconv.Itoa(int(c.Id)))
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			log.Println(err)
+			return
+		}
+		c.Image = encodedImg
+
+		categories = append(categories, c)
+	}
+
+	bytes, err := json.Marshal(categories)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	w.Write(bytes)
 }
 
 func StoreStoreIdCategorylistCategoryListIdDelete(w http.ResponseWriter, r *http.Request) {
