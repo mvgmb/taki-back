@@ -416,7 +416,7 @@ paths:
         200:
           description: "Successful response"
           schema:
-            $ref: "#/definitions/Map"
+            type: "string"
       security:
       - bearerAuth: []
   /store/{storeId}/search/categories/{input}:
@@ -528,7 +528,7 @@ definitions:
       name:
         type: "string"
         description: "Name of list"
-      products:
+      categories:
         type: "array"
         description: "List of Categories"
         items:

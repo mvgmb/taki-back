@@ -14,123 +14,126 @@ import (
 )
 
 func mapRoute(storeId, listId string) (*MapRoute, error){
-	list, err := getList(listId) 
-	if err != nil {
-		return nil, err
-	}
+	return nil, nil
 
-	listMap := make(map[string]bool)
-	for i := range list.Products {
-		category, err := getProductCategory(storeId, list.Products[i].Id)
-		if err != nil {
-			return nil, err
-		}
-		listMap[category] = true
-	}	
+	// not working
+	// list, err := getList(listId) 
+	// if err != nil {
+	// 	return nil, err
+	// }
 
-	storeMap, err := getMap(storeId)
-	if err != nil {
-		return nil, err
-	}
+	// listMap := make(map[string]bool)
+	// for i := range list.Products {
+	// 	category, err := getProductCategory(storeId, list.Products[i].Id)
+	// 	if err != nil {
+	// 		return nil, err
+	// 	}
+	// 	listMap[category] = true
+	// }	
 
-	noRows := len(storeMap.Matrix)
-	noColumns := len(storeMap.Matrix[0])
+	// storeMap, err := getMap(storeId)
+	// if err != nil {
+	// 	return nil, err
+	// }
 
-	startRow := -1
-	startColumn := -1
+	// noRows := len(storeMap.Matrix)
+	// noColumns := len(storeMap.Matrix[0])
 
-	for i := 0; i < noRows; i++ {
-		for j := 0; j < noColumns; j++ {
-			if storeMap.Matrix[i][j].Category == "Start" {
-				startRow = i
-				startColumn = j
-				break
-			}
-		}
-		if startRow != -1 {
-			break
-		}
-	}
+	// startRow := -1
+	// startColumn := -1
 
-	visited := make([][]bool, noRows)
-	for i := range visited {
-		visited[i] = make([]bool, noColumns)
-	}
+	// for i := 0; i < noRows; i++ {
+	// 	for j := 0; j < noColumns; j++ {
+	// 		if storeMap.Matrix[i][j].Category == "Start" {
+	// 			startRow = i
+	// 			startColumn = j
+	// 			break
+	// 		}
+	// 	}
+	// 	if startRow != -1 {
+	// 		break
+	// 	}
+	// }
 
-	type Pair struct {
-		i, j int
-	}
+	// visited := make([][]bool, noRows)
+	// for i := range visited {
+	// 	visited[i] = make([]bool, noColumns)
+	// }
 
-	var route []MapValue
+	// type Pair struct {
+	// 	i, j int
+	// }
 
-	queue := make([]Pair, 0)
-	queue = append(queue, Pair{i:startRow, j:startColumn})
+	// var route []MapValue
 
-	for len(queue) != 0 && len(listMap) > 0 {
-		i := queue[0].i
-		j := queue[0].j
+	// queue := make([]Pair, 0)
+	// queue = append(queue, Pair{i:startRow, j:startColumn})
 
-		queue = queue[1:]
-		visited[i][j] = true
+	// for len(queue) != 0 && len(listMap) > 0 {
+	// 	i := queue[0].i
+	// 	j := queue[0].j
 
-		if i-1 >= 0 && !visited[i-1][j] { 
-			category := storeMap.Matrix[i-1][j].Category
-			if category == "Free" {
-				queue = append(queue, Pair{i:i-1, j:j})
-			} else if listMap[category] {
-				route = append(route, storeMap.Matrix[i-1][j])
+	// 	queue = queue[1:]
+	// 	visited[i][j] = true
 
-				delete(listMap, category)
-				clearMatrix(&visited)
-				queue := make([]Pair, 0)
-				queue = append(queue, Pair{i:i,j:j})
-			}
-		}
-		if i+1 < noRows && !visited[i+1][j] { 
-			category := storeMap.Matrix[i+1][j].Category
-			if category == "Free" {
-				queue = append(queue, Pair{i:i+1, j:j})
-			} else if listMap[category] {
-				route = append(route, storeMap.Matrix[i+1][j])
+	// 	if i-1 >= 0 && !visited[i-1][j] { 
+	// 		category := storeMap.Matrix[i-1][j].Category
+	// 		if category == "Free" {
+	// 			queue = append(queue, Pair{i:i-1, j:j})
+	// 		} else if listMap[category] {
+	// 			route = append(route, storeMap.Matrix[i-1][j])
 
-				delete(listMap, category)				
-				clearMatrix(&visited)
-				queue := make([]Pair, 0)
-				queue = append(queue, Pair{i:i,j:j})
-			}
-		}
-		if j-1 >= 0 && !visited[i][j-1]  {
-			category := storeMap.Matrix[i][j-1].Category
-			if category == "Free" {
-				queue = append(queue, Pair{i:i, j:j-1})
-			} else if listMap[category] {
-				route = append(route, storeMap.Matrix[i][j-1])
+	// 			delete(listMap, category)
+	// 			clearMatrix(&visited)
+	// 			queue := make([]Pair, 0)
+	// 			queue = append(queue, Pair{i:i,j:j})
+	// 		}
+	// 	}
+	// 	if i+1 < noRows && !visited[i+1][j] { 
+	// 		category := storeMap.Matrix[i+1][j].Category
+	// 		if category == "Free" {
+	// 			queue = append(queue, Pair{i:i+1, j:j})
+	// 		} else if listMap[category] {
+	// 			route = append(route, storeMap.Matrix[i+1][j])
+
+	// 			delete(listMap, category)				
+	// 			clearMatrix(&visited)
+	// 			queue := make([]Pair, 0)
+	// 			queue = append(queue, Pair{i:i,j:j})
+	// 		}
+	// 	}
+	// 	if j-1 >= 0 && !visited[i][j-1]  {
+	// 		category := storeMap.Matrix[i][j-1].Category
+	// 		if category == "Free" {
+	// 			queue = append(queue, Pair{i:i, j:j-1})
+	// 		} else if listMap[category] {
+	// 			route = append(route, storeMap.Matrix[i][j-1])
 				
-				delete(listMap, category)				
-				clearMatrix(&visited)
-				queue := make([]Pair, 0)
-				queue = append(queue, Pair{i:i,j:j})
-			}
-		}
-		if j+1 < noColumns && !visited[i][j+1] {
-			category := storeMap.Matrix[i][j+1].Category
-			if category == "Free" {
-				queue = append(queue, Pair{i:i, j:j+1})
-			} else if listMap[category] {
-				route = append(route, storeMap.Matrix[i][j+1])
+	// 			delete(listMap, category)				
+	// 			clearMatrix(&visited)
+	// 			queue := make([]Pair, 0)
+	// 			queue = append(queue, Pair{i:i,j:j})
+	// 		}
+	// 	}
+	// 	if j+1 < noColumns && !visited[i][j+1] {
+	// 		category := storeMap.Matrix[i][j+1].Category
+	// 		if category == "Free" {
+	// 			queue = append(queue, Pair{i:i, j:j+1})
+	// 		} else if listMap[category] {
+	// 			route = append(route, storeMap.Matrix[i][j+1])
 				
-				delete(listMap, category)				
-				clearMatrix(&visited)
-				queue := make([]Pair, 0)
-				queue = append(queue, Pair{i:i,j:j})
-			}
-		}		
-	}
+	// 			delete(listMap, category)				
+	// 			clearMatrix(&visited)
+	// 			queue := make([]Pair, 0)
+	// 			queue = append(queue, Pair{i:i,j:j})
+	// 		}
+	// 	}		
+	// }
 
-	e := &MapRoute{
-		Route: route,
-	}
-	return e, err
+	// e := &MapRoute{
+	// 	Route: route,
+	// }
+	// return e, err
 }
 
 func clearMatrix(matrix *[][]bool) {
@@ -183,7 +186,6 @@ func getMap(storeId string) (*ModelMap, error) {
 			log.Println(err)
 		}
 	}
-
 	raw := StoreMap{}
 
 	err = json.Unmarshal([]byte(mapString), &raw)
@@ -212,6 +214,7 @@ func getMap(storeId string) (*ModelMap, error) {
 		}
 		storeMap.Matrix = append(storeMap.Matrix, row)
 	}
+
 	return &storeMap, nil
 }
 
@@ -238,7 +241,7 @@ func getCategoryList(categoryListId string) (*CategoryList, error) {
 		}
 	}
 
-	raw := StoreList{}
+	raw := StoreCategoriesList{}
 
 	err = json.Unmarshal([]byte(categoryListString), &raw)
 	if err != nil {
@@ -246,7 +249,7 @@ func getCategoryList(categoryListId string) (*CategoryList, error) {
 		return nil, err
 	}
 
-	for _, v := range raw.Products {
+	for _, v := range raw.Categories {
 		stmt1 := fmt.Sprintf(`
 		SELECT c._id, c.Name, c.Description
 		FROM categories AS c 
@@ -268,8 +271,10 @@ func getCategoryList(categoryListId string) (*CategoryList, error) {
 			}
 		}
 
-		categoryList.Products = append(categoryList.Products, category1)
+		categoryList.Categories = append(categoryList.Categories, category1)
 	}
+
+	fmt.Println(categoryList)
 
 	return &categoryList, nil
 }

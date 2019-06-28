@@ -28,6 +28,10 @@ type StoreList struct {
 	Products []interface{} `json:"list"`
 }
 
+type StoreCategoriesList struct {
+	Categories []interface{} `json:"list"`
+}
+
 func CategoryCategoryIdGet(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 
@@ -225,6 +229,8 @@ func StoreStoreIdCategorylistCategoryListIdGet(w http.ResponseWriter, r *http.Re
 		return
 	}
 
+	fmt.Println(categoryList)
+
 	bytes, err := json.Marshal(*categoryList)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -237,11 +243,47 @@ func StoreStoreIdCategorylistCategoryListIdGet(w http.ResponseWriter, r *http.Re
 }
 
 func StoreStoreIdCategorylistCategoryListIdPut(w http.ResponseWriter, r *http.Request) {
-	// TODO
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+
+	_, err := checkAuthentication(r)
+	if err != nil {
+		w.WriteHeader(http.StatusUnauthorized)
+		log.Println(err)
+		return
+	}
+
+	categoryList, err := parseCategoryList(r)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err)
+		return
+	}
+
+	vars := mux.Vars(r)
+	categoryListJSON, err := json.Marshal(categoryList.Categories)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err)
+		return
+	}
+
+	stmt := fmt.Sprintf(`
+	UPDATE category_lists
+	SET name = '%s', list = '%s'
+	WHERE _id = '%s'`, categoryList.Name, string(categoryListJSON), vars["categoryListId"])
+
+	_, err = db.Query(stmt)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
 }
 
 func StoreStoreIdCategorylistCategoryListIdRouteGet(w http.ResponseWriter, r *http.Request) {
-	// TODO
+	// Front will do it
 }
 
 func StoreStoreIdListListIdDelete(w http.ResponseWriter, r *http.Request) {
@@ -494,14 +536,26 @@ func StoreStoreIdMapGet(w http.ResponseWriter, r *http.Request) {
 
 	vars := mux.Vars(r)
 
-	storeMap, err := getMap(vars["storeId"])
+	stmt := fmt.Sprintf(`
+	SELECT map
+	FROM stores 
+	WHERE _id = %s`, vars["storeId"])
+
+	rows, err := db.Query(stmt)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
 		log.Println(err)
-		return
 	}
 
-	bytes, err := json.Marshal(*storeMap)
+	var storeMap string
+
+	if rows.Next() {
+		err = rows.Scan(&storeMap)
+		if err != nil {
+			log.Println(err)
+		}
+	}
+
+	bytes, err := json.Marshal(storeMap)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		log.Println(err)

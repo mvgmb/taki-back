@@ -19,5 +19,5 @@ type CategoryList struct {
 	Name string `json:"name,omitempty"`
 
 	// List of Categories
-	Products []Category `json:"products,omitempty"`
+	Categories []Category `json:"products,omitempty"`
 }

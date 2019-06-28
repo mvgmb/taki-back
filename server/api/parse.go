@@ -50,3 +50,16 @@ func parseList(r *http.Request) (*List, error) {
 
 	return &list, nil
 }
+
+func parseCategoryList(r *http.Request) (*CategoryList, error) {
+	if r.Body == nil {
+		return nil, fmt.Errorf("req.Body: %v", r.Body)
+	}
+
+	var categoryList CategoryList
+	if err := json.NewDecoder(r.Body).Decode(&categoryList); err != nil {
+		return nil, err
+	}
+
+	return &categoryList, nil
+}

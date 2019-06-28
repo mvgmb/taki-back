@@ -48,4 +48,7 @@ curl -u alexandro@gmail.com: -X GET "localhost:8080/store/2/list/1/route" -H  "a
 # /store/{storeId}/map
 curl -u alexandro@gmail.com: -X GET "localhost:8080/store/1/map" -H  "accept: application/json"
 
+# /store/{storeId}/list/{categoryListId}
+curl -u alexandro@gmail.com: -X PUT "localhost:8080/store/1/categorylist/1" -H  "accept: application/json" -H  "Content-Type: application/json" -d "{  \"name\": \"name\",  \"_id\": 0,  \"categories\": [    {      \"name\": \"name\",      \"description\": \"description\",      \"_id\": 0    },    {      \"name\": \"name\",      \"description\": \"description\",      \"_id\": 0    }  ]}"
+
 ```
