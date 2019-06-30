@@ -18,7 +18,8 @@ CREATE TABLE products (
 
 CREATE TABLE categories (
     _id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    name TEXT, 
+    name TEXT,
+    id_category INT NOT NULL,
     description TEXT
 );
 
@@ -142,120 +143,6 @@ INSERT INTO products (name, description) VALUES ('Cotonetes', '');
 --   	[ ["Wall", "1", "h"],        ["Padaria", "1", "h"], ["Padaria", "1", "h"],       ["Padaria", "2", "h"],   ["Padaria", "2", "h"], ["Free", "0", "v"],         ["Free", "0", "v"],       ["Free", "0", "v"],  ["Free", "0", "v"],             ["Free", "0", "v"],      ["Free", "0", "v"],  ["Free", "0", "v"],  ["Free", "0", "v"],      ["Frigorifico", "8", "h"], ["Frigorifico", "8", "h"], ["Frigorifico", "8", "h"], ["Frigorifico", "8", "h"], ["Wall", "8", "v"] ]
 --     ]
 -- }');
-
-INSERT INTO stores (name, map) VALUES ('Tupan', 
-'{
-  "map":[
-  	[ ["Arroz", "1", "v"], ["Feijão", "1", "v"], ["Macarrão", "1", "v"] ],
-  	[ ["Arroz", "1", "v"], ["Feijão", "1", "v"], ["Macarrão", "1", "v"] ],
-  	[ ["Arroz", "1", "v"], ["Feijão", "1", "v"], ["Macarrão", "1", "v"] ]
-  ]
-}');
-
-INSERT INTO lists (name, list) VALUES ('Feira Arco Iris', '{ "list": ["4","18", "9"] }'); -- arco iris
-INSERT INTO lists (name, list) VALUES ('Meio de semana', '{ "list": ["1","2","3","4","5","7","8"] }');
-INSERT INTO lists (name, list) VALUES ('Fim de semana', '{ "list": ["15","9","11","13","3"] }');
-INSERT INTO lists (name, list) VALUES ('Lista Bocal', '{ "list": ["16","10","8"] }');
-INSERT INTO lists (name, list) VALUES ('Lista 1', '{ "list": ["1","2","7","17"] }');
-INSERT INTO lists (name, list) VALUES ('Lista 2', '{ "list": ["4","8","2","3","16"] }');
-INSERT INTO lists (name, list) VALUES ('list tatooed in reverse', '{ "list": ["1","3","6","15"] }');
-INSERT INTO lists (name, list) VALUES ('lista melhor que stairway to heaven', '{ "list": ["17","16","15","4","2"] }');
-INSERT INTO lists (name, list) VALUES ('lista predaco do meu coracao', '{ "list": ["1","2","7","17"] }');
-INSERT INTO lists (name, list) VALUES ('lista que demora', '{ "list": ["1"] }');
-INSERT INTO lists (name, list) VALUES ('List for those who live uptown', '{ "list": ["17"] }');
-INSERT INTO lists (name, list) VALUES ('list for Johnny Marr', '{ "list": ["3","2","1","15","7","9"] }');
-INSERT INTO lists (name, list) VALUES ('lista equalizavel', '{ "list": ["3","4","1","2","6","10","11"] }');
-INSERT INTO lists (name, list) VALUES ('list for when london finally drown', '{ "list": ["10","12","13","14","15","17","1"] }');
-INSERT INTO lists (name, list) VALUES ('list for after the house burn', '{ "list": ["11","5","6","7","8","9","10"] }');
-
-INSERT INTO category_lists (name, list) VALUES ('Feira Arco Iris', '{ "list": ["12","1","6"] }');
-
-INSERT INTO categories (name, description) VALUES ('Achocolatado', '');
-INSERT INTO categories (name, description) VALUES ('Leite em pó', '');
-INSERT INTO categories (name, description) VALUES ('Lã de Aço', '');
-INSERT INTO categories (name, description) VALUES ('Cerveja', '');
-INSERT INTO categories (name, description) VALUES ('Refrigerante', '');
-INSERT INTO categories (name, description) VALUES ('Doce', '');
-INSERT INTO categories (name, description) VALUES ('Chocolate', '');
-INSERT INTO categories (name, description) VALUES ('Enlatado', '');
-INSERT INTO categories (name, description) VALUES ('Condimentos', '');
-INSERT INTO categories (name, description) VALUES ('Salgadinho', '');
-INSERT INTO categories (name, description) VALUES ('Chocolate em pó', '');
-INSERT INTO categories (name, description) VALUES ('Higiene', '');
-
-INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 1, 1);
-INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 2, 1);
-INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 3, 2);
-INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 4, 3);
-INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 5, 4);
-INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 6, 4);
-INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 7, 4);
-INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 8, 4);
-INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 9, 4);
-INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 10, 4);
-INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 11, 5);
-INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 12, 5);
-INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 13, 5);
-INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 14, 5);
-INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 15, 5);
-INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 16, 5);
-INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 17, 5);
-INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 18, 5);
-INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 19, 5);
-INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 20, 6);
-INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 21, 6);
-INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 22, 7);
-INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 23, 7);
-INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 24, 7);
-INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 25, 7);
-INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 26, 8);
-INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 27, 8);
-INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 28, 9);
-INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 29, 9);
-INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 30, 9);
-INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 31, 9);
-INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 32, 10);
-INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 33, 10);
-INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 34, 10);
-INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 35, 10);
-INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 36, 10);
-INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 37, 11);
-INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 38, 11);
-INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 39, 12);
-INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 40, 12);
-
-INSERT INTO user_lists (user_id, list_id, store_id) VALUES (1, 1, 1);
-INSERT INTO user_lists (user_id, list_id, store_id) VALUES (1, 2, 1);
-INSERT INTO user_lists (user_id, list_id, store_id) VALUES (3, 3, 1);
-INSERT INTO user_lists (user_id, list_id, store_id) VALUES (2, 4, 1);
-INSERT INTO user_lists (user_id, list_id, store_id) VALUES (2, 5, 1);
-INSERT INTO user_lists (user_id, list_id, store_id) VALUES (4, 6, 1);
-INSERT INTO user_lists (user_id, list_id, store_id) VALUES (5, 7, 1);
-INSERT INTO user_lists (user_id, list_id, store_id) VALUES (6, 8, 1);
-INSERT INTO user_lists (user_id, list_id, store_id) VALUES (7, 9, 1);
-INSERT INTO user_lists (user_id, list_id, store_id) VALUES (8, 10, 1);
-INSERT INTO user_lists (user_id, list_id, store_id) VALUES (9, 11, 1);
-INSERT INTO user_lists (user_id, list_id, store_id) VALUES (10, 12, 1);
-INSERT INTO user_lists (user_id, list_id, store_id) VALUES (11, 13, 1);
-INSERT INTO user_lists (user_id, list_id, store_id) VALUES (12, 14, 1);
-INSERT INTO user_lists (user_id, list_id, store_id) VALUES (12, 15, 1);
-
-INSERT INTO category_lists (name, list) VALUES ('Feira Arco Iris', '{ "list": ["4","9"] }');
-INSERT INTO category_lists (name, list) VALUES ('Meio de semana', '{ "list": ["1","2","3","4","5","7","8"] }');
-INSERT INTO category_lists (name, list) VALUES ('Fim de semana', '{ "list": ["9","11","3"] }');
-INSERT INTO category_lists (name, list) VALUES ('Lista Bocal', '{ "list": ["10","8"] }');
-INSERT INTO category_lists (name, list) VALUES ('Lista 1', '{ "list": ["1","2","7"] }');
-INSERT INTO category_lists (name, list) VALUES ('Lista 2', '{ "list": ["4","8","2","3"] }');
-INSERT INTO category_lists (name, list) VALUES ('list tatooed in reverse', '{ "list": ["1","3","6"] }');
-INSERT INTO category_lists (name, list) VALUES ('lista melhor que stairway to heaven', '{ "list": ["4","2"] }');
-INSERT INTO category_lists (name, list) VALUES ('lista predaco do meu coracao', '{ "list": ["1","2","7"] }');
-INSERT INTO category_lists (name, list) VALUES ('lista que demora', '{ "list": ["1"] }');
-INSERT INTO category_lists (name, list) VALUES ('List for those who live uptown', '{ "list": ["11"] }');
-INSERT INTO category_lists (name, list) VALUES ('list for Johnny Marr', '{ "list": ["3","2","1","7","9"] }');
-INSERT INTO category_lists (name, list) VALUES ('lista equalizavel', '{ "list": ["3","4","1","2","6","10","11"] }');
-INSERT INTO category_lists (name, list) VALUES ('list for when london finally drown', '{ "list": ["10","1"] }');
-INSERT INTO category_lists (name, list) VALUES ('list for after the house burn', '{ "list": ["11","5","6","7","8","9","10"] }');
-
 
 INSERT INTO stores (name, map) VALUES ('Arco Iris', 
 '{
@@ -601,3 +488,152 @@ INSERT INTO stores (name, map) VALUES ('Arco Iris',
 ]
 }'
 );
+
+INSERT INTO stores (name, map) VALUES ('Tupan', 
+'{
+  "map":[
+  	[ ["Arroz", "1", "v"], ["Feijão", "1", "v"], ["Macarrão", "1", "v"] ],
+  	[ ["Arroz", "1", "v"], ["Feijão", "1", "v"], ["Macarrão", "1", "v"] ],
+  	[ ["Arroz", "1", "v"], ["Feijão", "1", "v"], ["Macarrão", "1", "v"] ]
+  ]
+}');
+
+INSERT INTO lists (name, list) VALUES ('Feira Arco Iris', '{ "list": ["4","18", "9"] }'); -- arco iris
+INSERT INTO lists (name, list) VALUES ('Meio de semana', '{ "list": ["1","2","3","4","5","7","8"] }');
+INSERT INTO lists (name, list) VALUES ('Fim de semana', '{ "list": ["15","9","11","13","3"] }');
+INSERT INTO lists (name, list) VALUES ('Lista Bocal', '{ "list": ["16","10","8"] }');
+INSERT INTO lists (name, list) VALUES ('Lista 1', '{ "list": ["1","2","7","17"] }');
+INSERT INTO lists (name, list) VALUES ('Lista 2', '{ "list": ["4","8","2","3","16"] }');
+INSERT INTO lists (name, list) VALUES ('list tatooed in reverse', '{ "list": ["1","3","6","15"] }');
+INSERT INTO lists (name, list) VALUES ('lista melhor que stairway to heaven', '{ "list": ["17","16","15","4","2"] }');
+INSERT INTO lists (name, list) VALUES ('lista predaco do meu coracao', '{ "list": ["1","2","7","17"] }');
+INSERT INTO lists (name, list) VALUES ('lista que demora', '{ "list": ["1"] }');
+INSERT INTO lists (name, list) VALUES ('List for those who live uptown', '{ "list": ["17"] }');
+INSERT INTO lists (name, list) VALUES ('list for Johnny Marr', '{ "list": ["3","2","1","15","7","9"] }');
+INSERT INTO lists (name, list) VALUES ('lista equalizavel', '{ "list": ["3","4","1","2","6","10","11"] }');
+INSERT INTO lists (name, list) VALUES ('list for when london finally drown', '{ "list": ["10","12","13","14","15","17","1"] }');
+INSERT INTO lists (name, list) VALUES ('list for after the house burn', '{ "list": ["11","5","6","7","8","9","10"] }');
+
+INSERT INTO category_lists (name, list) VALUES ('Feira Arco Iris', '{ "list": ["12","1","6"] }');
+
+-- INSERT INTO categories (name, id_category) VALUES ('Descartáveis', 1)      
+-- INSERT INTO categories (name, id_category) VALUES ('Biscoito', 1)
+-- INSERT INTO categories (name, id_category) VALUES ('Bebidas', 1)
+-- INSERT INTO categories (name, id_category) VALUES ('Ovos', 2)
+-- INSERT INTO categories (name, id_category) VALUES ('Hortifruti', 5)
+-- INSERT INTO categories (name, id_category) VALUES ('Padaria', 1)
+-- INSERT INTO categories (name, id_category) VALUES ('Leite e Achocolatado', 6)
+-- INSERT INTO categories (name, id_category) VALUES ('Doces e Bolos', 1)
+-- INSERT INTO categories (name, id_category) VALUES ('Frutas', 5)
+-- INSERT INTO categories (name, id_category) VALUES ('Enlatados', 1)
+-- INSERT INTO categories (name, id_category) VALUES ('Massas', 1)
+-- INSERT INTO categories (name, id_category) VALUES ('Condimentos', 1)
+-- INSERT INTO categories (name, id_category) VALUES ('Fraldas', 4)
+-- INSERT INTO categories (name, id_category) VALUES ('Perfumaria', 1)
+-- INSERT INTO categories (name, id_category) VALUES ('Verduras', 5)
+-- INSERT INTO categories (name, id_category) VALUES ('Limpeza', 3)
+-- INSERT INTO categories (name, id_category) VALUES ('Pets', 1)
+-- INSERT INTO categories (name, id_category) VALUES ('Grãos', 1)
+-- INSERT INTO categories (name, id_category) VALUES ('Frango', 2)
+-- INSERT INTO categories (name, id_category) VALUES ('Carne', 2)
+-- INSERT INTO categories (name, id_category) VALUES ('Peixe', 2)
+-- INSERT INTO categories (name, id_category) VALUES ('Congelado', 1)
+-- INSERT INTO categories (name, id_category) VALUES ('Sorvete', 1)
+-- INSERT INTO categories (name, id_category) VALUES ('Laticinios', 6)
+-- INSERT INTO categories (name, id_category) VALUES ('Frios', 1)
+-- INSERT INTO categories (name, id_category) VALUES ('Frigorífico', 2)
+-- INSERT INTO categories (name, id_category) VALUES ('Sabonete', 4)
+-- INSERT INTO categories (name, id_category) VALUES ('Ofertas', 1)
+-- INSERT INTO categories (name, id_category) VALUES ('Aveia', 1)
+-- INSERT INTO categories (name, id_category) VALUES ('Bolacha', 1)
+-- INSERT INTO categories (name, id_category) VALUES ('Cozinha', 1)
+-- INSERT INTO categories (name, id_category) VALUES ('Sandalia', 1)
+-- INSERT INTO categories (name, id_category) VALUES ('Cuscuz e Milho', 1)
+-- INSERT INTO categories (name, id_category) VALUES ('Beleza', 1)
+-- INSERT INTO categories (name, id_category) VALUES ('Margarinas e Manteigas', 6)
+-- INSERT INTO categories (name, id_category) VALUES ('Pré Prontos', 1)
+-- INSERT INTO categories (name, id_category) VALUES ('Arroz, Farinha e Açúcar', 1)
+-- INSERT INTO categories (name, id_category) VALUES ('Café', 1)
+-- INSERT INTO categories (name, id_category) VALUES ('Sucos', 1)
+-- INSERT INTO categories (name, id_category) VALUES ('Salgadinhos', 1)
+-- INSERT INTO categories (name, id_category) VALUES ('Vinagre', 1)
+-- INSERT INTO categories (name, id_category) VALUES ('Dieta', 1)
+-- INSERT INTO categories (name, id_category) VALUES ('Chá', 1)
+-- INSERT INTO categories (name, id_category) VALUES ('Veneno', 3)
+-- INSERT INTO categories (name, id_category) VALUES ('Talheres', 1)
+-- INSERT INTO categories (name, id_category) VALUES ('Absorventes', 4)
+-- INSERT INTO categories (name, id_category) VALUES ('Papel Higiênico', 4)
+-- INSERT INTO categories (name, id_category) VALUES ('Higiene Bucal', 4)
+
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 1, 1);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 2, 1);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 3, 2);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 4, 3);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 5, 4);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 6, 4);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 7, 4);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 8, 4);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 9, 4);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 10, 4);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 11, 5);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 12, 5);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 13, 5);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 14, 5);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 15, 5);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 16, 5);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 17, 5);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 18, 5);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 19, 5);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 20, 6);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 21, 6);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 22, 7);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 23, 7);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 24, 7);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 25, 7);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 26, 8);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 27, 8);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 28, 9);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 29, 9);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 30, 9);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 31, 9);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 32, 10);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 33, 10);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 34, 10);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 35, 10);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 36, 10);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 37, 11);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 38, 11);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 39, 12);
+INSERT INTO product_category (store_id, product_id, category_id) VALUES (1, 40, 12);
+
+INSERT INTO user_lists (user_id, list_id, store_id) VALUES (1, 1, 1);
+INSERT INTO user_lists (user_id, list_id, store_id) VALUES (1, 2, 1);
+INSERT INTO user_lists (user_id, list_id, store_id) VALUES (3, 3, 1);
+INSERT INTO user_lists (user_id, list_id, store_id) VALUES (2, 4, 1);
+INSERT INTO user_lists (user_id, list_id, store_id) VALUES (2, 5, 1);
+INSERT INTO user_lists (user_id, list_id, store_id) VALUES (4, 6, 1);
+INSERT INTO user_lists (user_id, list_id, store_id) VALUES (5, 7, 1);
+INSERT INTO user_lists (user_id, list_id, store_id) VALUES (6, 8, 1);
+INSERT INTO user_lists (user_id, list_id, store_id) VALUES (7, 9, 1);
+INSERT INTO user_lists (user_id, list_id, store_id) VALUES (8, 10, 1);
+INSERT INTO user_lists (user_id, list_id, store_id) VALUES (9, 11, 1);
+INSERT INTO user_lists (user_id, list_id, store_id) VALUES (10, 12, 1);
+INSERT INTO user_lists (user_id, list_id, store_id) VALUES (11, 13, 1);
+INSERT INTO user_lists (user_id, list_id, store_id) VALUES (12, 14, 1);
+INSERT INTO user_lists (user_id, list_id, store_id) VALUES (12, 15, 1);
+
+INSERT INTO category_lists (name, list) VALUES ('Feira Arco Iris', '{ "list": ["4","9"] }');
+INSERT INTO category_lists (name, list) VALUES ('Meio de semana', '{ "list": ["1","2","3","4","5","7","8"] }');
+INSERT INTO category_lists (name, list) VALUES ('Fim de semana', '{ "list": ["9","11","3"] }');
+INSERT INTO category_lists (name, list) VALUES ('Lista Bocal', '{ "list": ["10","8"] }');
+INSERT INTO category_lists (name, list) VALUES ('Lista 1', '{ "list": ["1","2","7"] }');
+INSERT INTO category_lists (name, list) VALUES ('Lista 2', '{ "list": ["4","8","2","3"] }');
+INSERT INTO category_lists (name, list) VALUES ('list tatooed in reverse', '{ "list": ["1","3","6"] }');
+INSERT INTO category_lists (name, list) VALUES ('lista melhor que stairway to heaven', '{ "list": ["4","2"] }');
+INSERT INTO category_lists (name, list) VALUES ('lista predaco do meu coracao', '{ "list": ["1","2","7"] }');
+INSERT INTO category_lists (name, list) VALUES ('lista que demora', '{ "list": ["1"] }');
+INSERT INTO category_lists (name, list) VALUES ('List for those who live uptown', '{ "list": ["11"] }');
+INSERT INTO category_lists (name, list) VALUES ('list for Johnny Marr', '{ "list": ["3","2","1","7","9"] }');
+INSERT INTO category_lists (name, list) VALUES ('lista equalizavel', '{ "list": ["3","4","1","2","6","10","11"] }');
+INSERT INTO category_lists (name, list) VALUES ('list for when london finally drown', '{ "list": ["10","1"] }');
+INSERT INTO category_lists (name, list) VALUES ('list for after the house burn', '{ "list": ["11","5","6","7","8","9","10"] }');

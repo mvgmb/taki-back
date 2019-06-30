@@ -99,9 +99,7 @@ paths:
         200:
           description: "Successful response"
           schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Product"
+            type: "string"
       security:
       - bearerAuth: []
   /category/{categoryId}:
